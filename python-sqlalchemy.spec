@@ -5,7 +5,7 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.1.7
+Version:        0.2.1
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -48,7 +48,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc README LICENSE PKG-INFO doc examples
+%doc README LICENSE PKG-INFO CHANGES doc examples
 %{python_sitelib}/%{srcname}-%{version}-py%{pyver}.egg-info
 %dir %{python_sitelib}/sqlalchemy
 %{python_sitelib}/sqlalchemy/*.py
@@ -62,16 +62,23 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/sqlalchemy/ext/*.py
 %{python_sitelib}/sqlalchemy/ext/*.pyc
 %ghost %{python_sitelib}/sqlalchemy/ext/*.pyo
-%dir %{python_sitelib}/sqlalchemy/mapping
-%{python_sitelib}/sqlalchemy/mapping/*.py
-%{python_sitelib}/sqlalchemy/mapping/*.pyc
-%ghost %{python_sitelib}/sqlalchemy/mapping/*.pyo
 %dir %{python_sitelib}/sqlalchemy/mods
 %{python_sitelib}/sqlalchemy/mods/*.py
 %{python_sitelib}/sqlalchemy/mods/*.pyc
 %ghost %{python_sitelib}/sqlalchemy/mods/*.pyo
+%dir %{python_sitelib}/sqlalchemy/engine
+%{python_sitelib}/sqlalchemy/engine/*.py
+%{python_sitelib}/sqlalchemy/engine/*.pyc
+%ghost %{python_sitelib}/sqlalchemy/engine/*.pyo
+%dir %{python_sitelib}/sqlalchemy/orm
+%{python_sitelib}/sqlalchemy/orm/*.py
+%{python_sitelib}/sqlalchemy/orm/*.pyc
+%ghost %{python_sitelib}/sqlalchemy/orm/*.pyo
 
 %changelog
+* Wed May 31 2006 Shahms E. King <shahms@shahms.com> 0.2.1-1
+- Update to new upstream version
+
 * Tue May 16 2006 Shahms E. King <shahms@shahms.com> 0.1.7-1
 - Update to new upstream version
 - Point URL to direct link, not sourceforge redirect
