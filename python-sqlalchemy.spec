@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.2.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -53,29 +53,32 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{python_sitelib}/sqlalchemy
 %{python_sitelib}/sqlalchemy/*.py
 %{python_sitelib}/sqlalchemy/*.pyc
-%ghost %{python_sitelib}/sqlalchemy/*.pyo
+%{python_sitelib}/sqlalchemy/*.pyo
 %dir %{python_sitelib}/sqlalchemy/databases
 %{python_sitelib}/sqlalchemy/databases/*.py
 %{python_sitelib}/sqlalchemy/databases/*.pyc
-%ghost %{python_sitelib}/sqlalchemy/databases/*.pyo
+%{python_sitelib}/sqlalchemy/databases/*.pyo
 %dir %{python_sitelib}/sqlalchemy/ext
 %{python_sitelib}/sqlalchemy/ext/*.py
 %{python_sitelib}/sqlalchemy/ext/*.pyc
-%ghost %{python_sitelib}/sqlalchemy/ext/*.pyo
+%{python_sitelib}/sqlalchemy/ext/*.pyo
 %dir %{python_sitelib}/sqlalchemy/mods
 %{python_sitelib}/sqlalchemy/mods/*.py
 %{python_sitelib}/sqlalchemy/mods/*.pyc
-%ghost %{python_sitelib}/sqlalchemy/mods/*.pyo
+%{python_sitelib}/sqlalchemy/mods/*.pyo
 %dir %{python_sitelib}/sqlalchemy/engine
 %{python_sitelib}/sqlalchemy/engine/*.py
 %{python_sitelib}/sqlalchemy/engine/*.pyc
-%ghost %{python_sitelib}/sqlalchemy/engine/*.pyo
+%{python_sitelib}/sqlalchemy/engine/*.pyo
 %dir %{python_sitelib}/sqlalchemy/orm
 %{python_sitelib}/sqlalchemy/orm/*.py
 %{python_sitelib}/sqlalchemy/orm/*.pyc
-%ghost %{python_sitelib}/sqlalchemy/orm/*.pyo
+%{python_sitelib}/sqlalchemy/orm/*.pyo
 
 %changelog
+* Fri Aug 11 2006 Shahms E. King <shahms@shahms.com> 0.2.6-2
+- Include, don't ghost .pyo files per new guidelines
+
 * Tue Aug 08 2006 Shahms E. King <shahms@shahms.com> 0.2.6-1
 - Update to new upstream version
 
