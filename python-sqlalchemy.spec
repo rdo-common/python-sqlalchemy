@@ -5,8 +5,8 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.2.6
-Release:        2%{?dist}
+Version:        0.2.7
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/sqlalchemy/orm/*.pyo
 
 %changelog
+* Thu Aug 17 2006 Shahms E. King <shahms@shahms.com> 0.2.7-1
+- Update to new upstream version
+
 * Fri Aug 11 2006 Shahms E. King <shahms@shahms.com> 0.2.6-2
 - Include, don't ghost .pyo files per new guidelines
 
