@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.2.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/sqlalchemy/orm/*.pyo
 
 %changelog
+* Sat Sep 16 2006 Shahms E. King <shahms@shahms.com> 0.2.7-2
+- Rebuild for FC6
+
 * Thu Aug 17 2006 Shahms E. King <shahms@shahms.com> 0.2.7-1
 - Update to new upstream version
 
