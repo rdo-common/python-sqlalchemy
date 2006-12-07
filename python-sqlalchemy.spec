@@ -5,8 +5,8 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.2.7
-Release:        2%{?dist}
+Version:        0.3.1
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -16,7 +16,8 @@ Source0:        http://download.sourceforge.net/sqlalchemy/%{srcname}-%{version}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
-BuildRequires:  python python-setuptools
+BuildRequires:  python 
+BuildRequires:  python-setuptools >= 0.6c3
 Requires:       python-abi = %{pyver}
 
 %description
@@ -76,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/sqlalchemy/orm/*.pyo
 
 %changelog
+* Fri Nov 24 2006 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.1-1
+- Update to new upstream version 0.3.1
+
 * Sat Sep 16 2006 Shahms E. King <shahms@shahms.com> 0.2.7-2
 - Rebuild for FC6
 
