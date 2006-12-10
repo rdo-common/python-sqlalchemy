@@ -16,7 +16,7 @@ Source0:        http://download.sourceforge.net/sqlalchemy/%{srcname}-%{version}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
-BuildRequires:  python 
+BuildRequires:  python-devel
 BuildRequires:  python-setuptools >= 0.6c3
 Requires:       python-abi = %{pyver}
 
@@ -79,6 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sat Dec 09 2006 Toshi Kuratomi <toshio@tiki-lounge.com> - 0.3.1-2
 - Bump and rebuild for python 2.5 on devel.
+- BuildRequire: python-devel as a header is missing otherwise.
 
 * Fri Nov 24 2006 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.1-1
 - Update to new upstream version 0.3.1
