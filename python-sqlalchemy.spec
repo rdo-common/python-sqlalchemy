@@ -5,8 +5,8 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.3.1
-Release:        2%{?dist}
+Version:        0.3.3
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -77,7 +77,10 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/sqlalchemy/orm/*.pyo
 
 %changelog
-* Sat Dec 09 2006 Toshi Kuratomi <toshio@tiki-lounge.com> - 0.3.1-2
+* Mon Jan 01 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.3-1
+- Update to new upstream versin 0.3.3
+
+* Sat Dec 09 2006 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.1-2
 - Bump and rebuild for python 2.5 on devel.
 - BuildRequire: python-devel as a header is missing otherwise.
 
