@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.3.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -77,11 +77,14 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/sqlalchemy/orm/*.pyo
 
 %changelog
+* Tue Jan 23 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.4-2
+- Remember to upload the source tarball to the lookaside cache.
+
 * Tue Jan 23 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.4-1
-- Update to new upstream versin 0.3.4
+- Update to new upstream version 0.3.4
 
 * Mon Jan 01 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.3-1
-- Update to new upstream versin 0.3.3
+- Update to new upstream version 0.3.3
 
 * Sat Dec 09 2006 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.1-2
 - Bump and rebuild for python 2.5 on devel.
