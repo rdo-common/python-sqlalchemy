@@ -5,14 +5,14 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.3.4
-Release:        2%{?dist}
+Version:        0.3.5
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://download.sourceforge.net/sqlalchemy/%{srcname}-%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/sqlalchemy/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -51,32 +51,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc README LICENSE PKG-INFO CHANGES doc examples
 %{python_sitelib}/%{srcname}-%{version}-py%{pyver}.egg-info
-%dir %{python_sitelib}/sqlalchemy
-%{python_sitelib}/sqlalchemy/*.py
-%{python_sitelib}/sqlalchemy/*.pyc
-%{python_sitelib}/sqlalchemy/*.pyo
-%dir %{python_sitelib}/sqlalchemy/databases
-%{python_sitelib}/sqlalchemy/databases/*.py
-%{python_sitelib}/sqlalchemy/databases/*.pyc
-%{python_sitelib}/sqlalchemy/databases/*.pyo
-%dir %{python_sitelib}/sqlalchemy/ext
-%{python_sitelib}/sqlalchemy/ext/*.py
-%{python_sitelib}/sqlalchemy/ext/*.pyc
-%{python_sitelib}/sqlalchemy/ext/*.pyo
-%dir %{python_sitelib}/sqlalchemy/mods
-%{python_sitelib}/sqlalchemy/mods/*.py
-%{python_sitelib}/sqlalchemy/mods/*.pyc
-%{python_sitelib}/sqlalchemy/mods/*.pyo
-%dir %{python_sitelib}/sqlalchemy/engine
-%{python_sitelib}/sqlalchemy/engine/*.py
-%{python_sitelib}/sqlalchemy/engine/*.pyc
-%{python_sitelib}/sqlalchemy/engine/*.pyo
-%dir %{python_sitelib}/sqlalchemy/orm
-%{python_sitelib}/sqlalchemy/orm/*.py
-%{python_sitelib}/sqlalchemy/orm/*.pyc
-%{python_sitelib}/sqlalchemy/orm/*.pyo
+%{python_sitelib}/sqlalchemy/
 
 %changelog
+* Sat Mar 10 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.5-1
+- Update to new upstream version 0.3.5
+- Simplify the files listing
+
 * Tue Jan 23 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.4-2
 - Remember to upload the source tarball to the lookaside cache.
 
