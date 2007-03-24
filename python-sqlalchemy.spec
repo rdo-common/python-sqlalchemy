@@ -5,7 +5,7 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.3.5
+Version:        0.3.6
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -54,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/sqlalchemy/
 
 %changelog
+* Fri Mar 23 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.6-1
+- Update to new upstream version 0.3.6
+
 * Sat Mar 10 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.5-1
 - Update to new upstream version 0.3.5
 - Simplify the files listing
