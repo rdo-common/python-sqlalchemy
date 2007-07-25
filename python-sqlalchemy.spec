@@ -18,7 +18,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel
 BuildRequires:  python-setuptools >= 0.6c3
-Requires:       python-abi = %{pyver}
 
 %description
 SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
@@ -54,6 +53,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/sqlalchemy/
 
 %changelog
+* Tue Jul 24 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.10-2
+- Remove python-abi Requires.  This is automatic since FC4+.
+
 * Tue Jul 24 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.10-1
 - Update to new upstream version 0.3.10
 
