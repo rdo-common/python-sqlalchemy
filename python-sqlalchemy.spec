@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.3.10
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
