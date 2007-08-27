@@ -3,16 +3,17 @@
 
 
 %define srcname SQLAlchemy
+%define betaver beta4
 
 Name:           python-sqlalchemy
-Version:        0.3.10
-Release:        2%{?dist}
+Version:        0.4.0
+Release:        0.1.%{betaver}%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://downloads.sourceforge.net/sqlalchemy/%{srcname}-%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/sqlalchemy/%{srcname}-%{version}%{betaver}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -29,7 +30,7 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n %{srcname}-%{version}%{betaver}
 
 
 %build
@@ -49,10 +50,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README LICENSE PKG-INFO CHANGES doc examples
-%{python_sitelib}/%{srcname}-%{version}-py%{pyver}.egg-info
+%{python_sitelib}/%{srcname}-%{version}%{betaver}-py%{pyver}.egg-info
 %{python_sitelib}/sqlalchemy/
 
 %changelog
+* Mon Aug 27 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.4.0-0.1.beta4
+- Update to 0.4 beta4.
+
 * Tue Jul 24 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.3.10-2
 - Remove python-abi Requires.  This is automatic since FC4+.
 
