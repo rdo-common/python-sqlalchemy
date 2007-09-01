@@ -7,7 +7,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.4.0
-Release:        0.1.%{betaver}%{?dist}
+Release:        0.3.%{betaver}%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -18,7 +18,11 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 BuildRequires:  python-devel
+%if 0%{?fedora} >= 8
+BuildRequires:  python-setuptools-devel >= 0.6c3
+%else
 BuildRequires:  python-setuptools >= 0.6c3
+%endif
 
 %description
 SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
@@ -34,12 +38,17 @@ domain.
 
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
+CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py bdist_egg
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT --single-version-externally-managed
+mkdir -p $RPM_BUILD_ROOT%{python_sitelib}
+easy_install -m --prefix $RPM_BUILD_ROOT%{_usr} --always-unzip dist/*.egg
+cd $RPM_BUILD_ROOT%{python_sitelib}/%{srcname}-%{version}%{betaver}-py%{pyver}.egg
+mv sqlalchemy ..
+ln -s ../sqlalchemy .
+
 # remove unnecessary scripts for building documentation
 rm -rf doc/build
 
@@ -50,10 +59,19 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README LICENSE PKG-INFO CHANGES doc examples
-%{python_sitelib}/%{srcname}-%{version}%{betaver}-py%{pyver}.egg-info
+%{python_sitelib}/%{srcname}-%{version}%{betaver}-py%{pyver}.egg
 %{python_sitelib}/sqlalchemy/
 
 %changelog
+* Fri Aug 31 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.3.beta4
+- setuptools seems to be broken WRT having an active and inactive version
+  of an egg.  Have to make both versions inactive and manually setup a copy
+  that can be started via import. (Necessary for the sqlalchemy0.3 compat
+  package.)
+
+* Tue Aug 28 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.2.beta4
+- Modify setuptools to handle the -devel subpackage split in F-8.
+
 * Mon Aug 27 2007 Toshio Kuratomi <toshio@tiki-lounge.com> - 0.4.0-0.1.beta4
 - Update to 0.4 beta4.
 
