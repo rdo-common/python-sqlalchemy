@@ -45,14 +45,6 @@ CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py bdist_egg
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{python_sitelib}
 python setup.py install --root $RPM_BUILD_ROOT
-#PYTHONPATH=$RPM_BUILD_ROOT%{python_sitelib} easy_install --prefix $RPM_BUILD_ROOT%{_usr} dist/*.egg 'SQLAlchemy==%{version}%{betaver}'
-#cd $RPM_BUILD_ROOT%{python_sitelib}
-#rm site.py*
-#mv easy-install.pth sqlalchemy.pth
-
-#cd $RPM_BUILD_ROOT%{python_sitelib}/%{srcname}-%{version}%{betaver}-py%{pyver}.egg
-#mv sqlalchemy ..
-#ln -s ../sqlalchemy .
 
 # remove unnecessary scripts for building documentation
 rm -rf doc/build
