@@ -3,11 +3,11 @@
 
 
 %define srcname SQLAlchemy
-%define betaver beta4
+%define betaver beta5
 
 Name:           python-sqlalchemy
 Version:        0.4.0
-Release:        0.3.%{betaver}%{?dist}
+Release:        0.4.%{betaver}%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -44,10 +44,15 @@ CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py bdist_egg
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{python_sitelib}
-easy_install -m --prefix $RPM_BUILD_ROOT%{_usr} --always-unzip dist/*.egg
-cd $RPM_BUILD_ROOT%{python_sitelib}/%{srcname}-%{version}%{betaver}-py%{pyver}.egg
-mv sqlalchemy ..
-ln -s ../sqlalchemy .
+python setup.py install --root $RPM_BUILD_ROOT
+#PYTHONPATH=$RPM_BUILD_ROOT%{python_sitelib} easy_install --prefix $RPM_BUILD_ROOT%{_usr} dist/*.egg 'SQLAlchemy==%{version}%{betaver}'
+#cd $RPM_BUILD_ROOT%{python_sitelib}
+#rm site.py*
+#mv easy-install.pth sqlalchemy.pth
+
+#cd $RPM_BUILD_ROOT%{python_sitelib}/%{srcname}-%{version}%{betaver}-py%{pyver}.egg
+#mv sqlalchemy ..
+#ln -s ../sqlalchemy .
 
 # remove unnecessary scripts for building documentation
 rm -rf doc/build
@@ -59,10 +64,15 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README LICENSE PKG-INFO CHANGES doc examples
-%{python_sitelib}/%{srcname}-%{version}%{betaver}-py%{pyver}.egg
-%{python_sitelib}/sqlalchemy/
+%{python_sitelib}/*
 
 %changelog
+* Tue Sep 11 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.4.beta5
+- Update to 0.4beta5.
+
+* Fri Sep 06 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.4.beta4
+- setuptools has been fixed.
+
 * Fri Aug 31 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.3.beta4
 - setuptools seems to be broken WRT having an active and inactive version
   of an egg.  Have to make both versions inactive and manually setup a copy
