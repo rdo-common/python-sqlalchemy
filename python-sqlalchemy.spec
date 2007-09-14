@@ -126,11 +126,3 @@ rm -rf $RPM_BUILD_ROOT
 
 * Wed May 31 2006 Shahms E. King <shahms@shahms.com> 0.2.1-1
 - Update to new upstream version
-
-* Tue May 16 2006 Shahms E. King <shahms@shahms.com> 0.1.7-1
-- Update to new upstream version
-- Point URL to direct link, not sourceforge redirect
-- Remove unnecessary document build scripts
-
-* Fri Apr 14 2006 Shahms E. King <shahms@shahms.com> 0.1.6-1
-- Initial package
