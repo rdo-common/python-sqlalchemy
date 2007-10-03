@@ -3,7 +3,7 @@
 
 
 %define srcname SQLAlchemy
-%define betaver beta5
+%define betaver beta6
 
 Name:           python-sqlalchemy
 Version:        0.4.0
@@ -18,11 +18,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 BuildRequires:  python-devel
-%if 0%{?fedora} >= 8
 BuildRequires:  python-setuptools-devel >= 0.6c3
-%else
-BuildRequires:  python-setuptools >= 0.6c3
-%endif
 
 %description
 SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
@@ -59,6 +55,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Wed Oct  3 2007 Luke Macken <lmacken@redhat.com> 0.4.0-0.4.beta6
+- SQLAlchemy-0.4.0beta6
+
 * Tue Sep 11 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.4.beta5
 - Update to 0.4beta5.
 
