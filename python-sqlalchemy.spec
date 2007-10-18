@@ -3,17 +3,16 @@
 
 
 %define srcname SQLAlchemy
-%define betaver beta6
 
 Name:           python-sqlalchemy
 Version:        0.4.0
-Release:        0.4.%{betaver}%{?dist}
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://downloads.sourceforge.net/sqlalchemy/%{srcname}-%{version}%{betaver}.tar.gz
+Source0:        http://downloads.sourceforge.net/sqlalchemy/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -30,17 +29,17 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 %prep
-%setup -q -n %{srcname}-%{version}%{betaver}
+%setup -q -n %{srcname}-%{version}
 
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py bdist_egg
+CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{python_sitelib}
-python setup.py install --root $RPM_BUILD_ROOT
+python setup.py install --skip-build --root $RPM_BUILD_ROOT
 
 # remove unnecessary scripts for building documentation
 rm -rf doc/build
@@ -48,6 +47,9 @@ rm -rf doc/build
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%check
+export PYTHONPATH=./test
+python test/alltests.py
 
 %files
 %defattr(-,root,root,-)
@@ -55,6 +57,10 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Wed Oct 17 2007 Toshio Kuratomi <a.badger@gmail.com> 0.4.0-1
+- SQLAlchemy-0.4.0 final
+- Run the testsuite
+
 * Wed Oct  3 2007 Luke Macken <lmacken@redhat.com> 0.4.0-0.4.beta6
 - SQLAlchemy-0.4.0beta6
 
