@@ -47,9 +47,9 @@ rm -rf doc/build
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-#%check
-#export PYTHONPATH=./test
-#python test/alltests.py
+%check
+export PYTHONPATH=./test
+python test/alltests.py
 
 %files
 %defattr(-,root,root,-)
