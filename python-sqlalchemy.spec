@@ -5,7 +5,7 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.4.0
+Version:        0.4.1
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -57,6 +57,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Tue Dec 11 2007 Toshio Kuratomi <a.badger@gmail.com> 0.4.1-1
+- Update to 0.4.1.
+
 * Wed Oct 17 2007 Toshio Kuratomi <a.badger@gmail.com> 0.4.0-1
 - SQLAlchemy-0.4.0 final
 - Run the testsuite
