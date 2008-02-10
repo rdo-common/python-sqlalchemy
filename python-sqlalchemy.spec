@@ -5,14 +5,14 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.4.1
-Release:        1%{?dist}
+Version:        0.4.2
+Release:        1.p3%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://downloads.sourceforge.net/sqlalchemy/%{srcname}-%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/sqlalchemy/%{srcname}-%{version}p3.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -29,7 +29,7 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n %{srcname}-%{version}p3
 
 
 %build
@@ -57,6 +57,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Tue Dec 11 2007 Toshio Kuratomi <a.badger@gmail.com> 0.4.2-1.p3
+- Update to 0.4.2p3.
+
 * Tue Dec 11 2007 Toshio Kuratomi <a.badger@gmail.com> 0.4.1-1
 - Update to 0.4.1.
 
