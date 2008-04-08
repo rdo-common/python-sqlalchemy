@@ -1,11 +1,10 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %{!?pyver: %define pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
 
-
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.4.3
+Version:        0.4.5
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -57,7 +56,10 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
-* Fri Feb 22 2008 Toshio Kuratomi <toshoi@fedoraproject.org> 0.4.3-1
+* Tue Apr 8 2008 Toshio Kuratomi <toshio@fedoraproject.org> 0.4.5-1
+- Update to 0.4.5.
+
+* Fri Feb 22 2008 Toshio Kuratomi <toshio@fedoraproject.org> 0.4.3-1
 - Update to 0.4.3.
 
 * Tue Dec 11 2007 Toshio Kuratomi <a.badger@gmail.com> 0.4.2-1.p3
