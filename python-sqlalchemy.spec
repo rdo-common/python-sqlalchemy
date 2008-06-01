@@ -4,7 +4,7 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.4.5
+Version:        0.4.6
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -33,7 +33,7 @@ domain.
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
-
+sed -i 's/\r//' examples/dynamic_dict/dynamic_dict.py
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -56,6 +56,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Sun Jun 1 2008 Toshio Kuratomi <toshio@fedoraproject.org> 0.4.6-1
+- Update to 0.4.6.
+
 * Tue Apr 8 2008 Toshio Kuratomi <toshio@fedoraproject.org> 0.4.5-1
 - Update to 0.4.5.
 
