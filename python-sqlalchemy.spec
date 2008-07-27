@@ -4,7 +4,7 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.4.6
+Version:        0.4.7
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -56,6 +56,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Sun Jul 27 2008 Toshio Kuratomi <toshio@fedoraproject.org> 0.4.7-1
+- Update to 0.4.7.
+
 * Sun Jun 1 2008 Toshio Kuratomi <toshio@fedoraproject.org> 0.4.6-1
 - Update to 0.4.6.
 
