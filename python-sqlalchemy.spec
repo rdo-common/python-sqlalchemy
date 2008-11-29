@@ -5,7 +5,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.4.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -56,6 +56,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 0.4.7-2
+- Rebuild for Python 2.6
+
 * Sun Jul 27 2008 Toshio Kuratomi <toshio@fedoraproject.org> 0.4.7-1
 - Update to 0.4.7.
 
