@@ -13,6 +13,7 @@ Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}%{?alphatag}.tar.gz
+Patch0: sqlalchemy-sqlite-unicode-test.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -30,7 +31,7 @@ domain.
 
 %prep
 %setup -q -n %{srcname}-%{version}%{?alphatag}
-
+%patch0 -p1 -b .unicode
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -58,7 +59,8 @@ python test/alltests.py
 
 %changelog
 * Mon Dec 1 2008 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5-0.1.rc4
-- Update to 0.5.0rc4 which works with the new pysqlite.
+- Update to 0.5.0rc4 which works with the new pysqlite
+- And update test cases to work with the new pysqlite
 
 * Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 0.4.7-2
 - Rebuild for Python 2.6
