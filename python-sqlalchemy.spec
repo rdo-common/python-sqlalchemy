@@ -2,16 +2,17 @@
 %{!?pyver: %define pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
 
 %define srcname SQLAlchemy
+%define alphatag rc4
 
 Name:           python-sqlalchemy
-Version:        0.4.7
-Release:        2%{?dist}
+Version:        0.5.0
+Release:        0.1.%{alphatag}%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://downloads.sourceforge.net/sqlalchemy/%{srcname}-%{version}.tar.gz
+Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}%{?alphatag}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -28,7 +29,7 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n %{srcname}-%{version}%{?alphatag}
 
 
 %build
@@ -56,6 +57,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Mon Dec 1 2008 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5-0.1.rc4
+- Update to 0.5.0rc4 which works with the new pysqlite.
+
 * Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 0.4.7-2
 - Rebuild for Python 2.6
 
