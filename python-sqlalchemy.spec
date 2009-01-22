@@ -2,18 +2,17 @@
 %{!?pyver: %define pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
 
 %define srcname SQLAlchemy
-%define alphatag rc4
 
 Name:           python-sqlalchemy
-Version:        0.5.0
-Release:        0.1.%{alphatag}%{?dist}
+Version:        0.5.1
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}%{?alphatag}.tar.gz
-Patch0: sqlalchemy-sqlite-unicode-test.patch
+Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+#Patch0: sqlalchemy-sqlite-unicode-test.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -31,7 +30,7 @@ domain.
 
 %prep
 %setup -q -n %{srcname}-%{version}%{?alphatag}
-%patch0 -p1 -b .unicode
+#%patch0 -p1 -b .unicode
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -58,6 +57,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Wed Jan 21 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.1-1
+- Update to 0.5.1.
+
 * Mon Dec 1 2008 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5-0.1.rc4
 - Update to 0.5.0rc4 which works with the new pysqlite
 - And update test cases to work with the new pysqlite
