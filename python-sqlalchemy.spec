@@ -4,7 +4,7 @@
 %define srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.5.1
+Version:        0.5.2
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -12,7 +12,6 @@ Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-#Patch0: sqlalchemy-sqlite-unicode-test.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -30,7 +29,6 @@ domain.
 
 %prep
 %setup -q -n %{srcname}-%{version}%{?alphatag}
-#%patch0 -p1 -b .unicode
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -57,6 +55,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Wed Feb 11 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.2-1
+- Update to 0.5.2
+
 * Wed Jan 21 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.1-1
 - Update to 0.5.1.
 
