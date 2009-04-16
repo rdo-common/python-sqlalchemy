@@ -55,7 +55,7 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
-* Thu Apr 162009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.3-1
+* Thu Apr 16 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.3-1
 - Upstream bugfix release.
 
 * Thu Feb 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.2-2
