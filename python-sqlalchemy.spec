@@ -1,17 +1,18 @@
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%{!?pyver: %define pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
+%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?pyver: %global pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
 
-%define srcname SQLAlchemy
+%global srcname SQLAlchemy
+%global patchtag p2
 
 Name:           python-sqlalchemy
-Version:        0.5.3
-Release:        1%{?dist}
+Version:        0.5.4
+Release:        1.%{?patchtag}%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}%{?patchtag}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -28,7 +29,7 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 %prep
-%setup -q -n %{srcname}-%{version}%{?alphatag}
+%setup -q -n %{srcname}-%{version}%{?patchtag}
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -55,6 +56,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Fri Jun 12 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.4-1.p2
+- Upstream bugfix release 0.5.4p2.
+
 * Thu Apr 16 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.3-1
 - Upstream bugfix release.
 
