@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.5.4
-Release:        1.%{?patchtag}%{?dist}
+Release:        2.%{?patchtag}%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -56,6 +56,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.4-2.p2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Fri Jun 12 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.4-1.p2
 - Upstream bugfix release 0.5.4p2.
 
