@@ -2,22 +2,22 @@
 %{!?pyver: %global pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
 
 %global srcname SQLAlchemy
-%global patchtag p2
 
 Name:           python-sqlalchemy
-Version:        0.5.4
-Release:        2.%{?patchtag}%{?dist}
+Version:        0.5.5
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}%{?patchtag}.tar.gz
+Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 BuildRequires:  python-devel
 BuildRequires:  python-setuptools-devel >= 0.6c3
+BuildRequires: python-nose
 
 %description
 SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
@@ -29,7 +29,7 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 %prep
-%setup -q -n %{srcname}-%{version}%{?patchtag}
+%setup -q -n %{srcname}-%{version}
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -47,8 +47,9 @@ rm -rf doc/build
 rm -rf $RPM_BUILD_ROOT
 
 %check
-export PYTHONPATH=./test
-python test/alltests.py
+export PYTHONPATH=.
+python setup.py develop -d .
+nosetests
 
 %files
 %defattr(-,root,root,-)
@@ -56,6 +57,9 @@ python test/alltests.py
 %{python_sitelib}/*
 
 %changelog
+* Thu Aug 13 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.5-1
+- Upstream bugfix release 0.5.5
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.4-2.p2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
