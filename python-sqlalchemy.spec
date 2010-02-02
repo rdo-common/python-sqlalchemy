@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.5.8
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -17,7 +17,11 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 BuildRequires:  python-devel
+%if 0%{?fedora} > 12 || 0%{?rhel} > 5
+BuildRequires: python-setuptools
+%else
 BuildRequires:  python-setuptools-devel >= 0.6c3
+%endif
 BuildRequires: python-nose
 
 %description
@@ -58,6 +62,9 @@ nosetests
 %{python_sitelib}/*
 
 %changelog
+* Tue Feb 2 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.8-3
+- One last cleanup
+
 * Tue Feb 2 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.8-2
 - just some cleanups to older styles of building packages.
 
