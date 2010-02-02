@@ -1,10 +1,11 @@
+%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%{!?pyver: %global pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
+%endif
 
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.5.5
+Version:        0.5.8
 Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -38,7 +39,7 @@ sed -i 's/\r//' examples/dynamic_dict/dynamic_dict.py
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{python_sitelib}
-python setup.py install --skip-build --root $RPM_BUILD_ROOT
+%{__python} setup.py install --skip-build --root $RPM_BUILD_ROOT
 
 # remove unnecessary scripts for building documentation
 rm -rf doc/build
@@ -48,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %check
 export PYTHONPATH=.
-python setup.py develop -d .
+%{__python} setup.py develop -d .
 nosetests
 
 %files
@@ -57,6 +58,12 @@ nosetests
 %{python_sitelib}/*
 
 %changelog
+* Tue Feb 2 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.8-2
+- just some cleanups to older styles of building packages.
+
+* Mon Feb 1 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.8-1
+- Upstream bugfix release 0.5.8
+
 * Fri Aug 14 2009 Toshio Kuratomi <toshio@fedoraproject.org> - 0.5.5-2
 - Upstream bugfix release 0.5.5
 
