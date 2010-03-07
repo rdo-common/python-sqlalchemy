@@ -1,12 +1,18 @@
 %if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
+%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %endif
+
+%if 0%{?fedora} > 12 || 0%{?rhel} > 6
+%global with_python3 1
+%endif
+
 
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
 Version:        0.6
-Release:        0.1.beta1%{?dist}
+Release:        0.2.beta1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -15,14 +21,23 @@ URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}beta1.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildArch:      noarch
-BuildRequires:  python-devel
+BuildRequires:  python2-devel
 %if 0%{?fedora} > 12 || 0%{?rhel} > 5
 BuildRequires: python-setuptools
 %else
 BuildRequires:  python-setuptools-devel >= 0.6c3
 %endif
 BuildRequires: python-nose
+
+%if 0%{?with_python3}
+BuildRequires:  python3-devel
+BuildRequires: python3-setuptools
+# No pythn3-nose package in fedora yet
+#BuildRequires:  python3-nose
+%endif
+
+# beta2 will include a cextension.  Remove this then
+BuildArch: noarch
 
 %description
 SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
@@ -33,35 +48,100 @@ as you choose, determining relationships based on foreign keys or letting you
 define the join conditions explicitly, to bridge the gap between database and
 domain.
 
+This package includes the python 2 version of the module.
+
+%if 0%{?with_python3}
+%package -n python3-sqlalchemy
+Summary:        Modular and flexible ORM library for python
+Group:          Development/Libraries
+
+%description -n python3-sqlalchemy
+SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
+high-level interface to SQL databases.  Database and domain concepts are
+decoupled, allowing both sides maximum flexibility and power. SQLAlchemy
+provides a powerful mapping layer that can work as automatically or as manually
+as you choose, determining relationships based on foreign keys or letting you
+define the join conditions explicitly, to bridge the gap between database and
+domain.
+
+This package includes the python 3 version of the module.
+%endif # with_python3
+
 %prep
 %setup -q -n %{srcname}-%{version}beta1
 
-%build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
 sed -i 's/\r//' examples/dynamic_dict/dynamic_dict.py
 
+%if 0%{?with_python3}
+rm -rf %{py3dir}
+cp -a . %{py3dir}
+%endif # with_python3
+
+%build
+# cextensions coming for beta2
+CFLAGS="%{optflags}" %{__python} setup.py build #--with-cextensions
+
+%if 0%{with_python3}
+pushd %{py3dir}
+# Convert tests, examples, source to python3
+%{__python3} sa2to3.py --no-diffs -w lib test examples
+# cextensions coming for beta2
+CFLAGS="%{optflags}" %{__python3} setup.py build #--with-cextensions
+popd
+%endif
+
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{python_sitelib}
-%{__python} setup.py install --skip-build --root $RPM_BUILD_ROOT
+rm -rf %{buildroot}
+
+mkdir -p %{buildroot}%{python_sitelib}
+%{__python} setup.py install --skip-build --root %{buildroot}
+
+%if 0%{?with_python3}
+pushd %{py3dir}
+mkdir -p %{buildroot}%{python3_sitelib}
+%{__python3} setup.py install --skip-build --root %{buildroot}
+popd
+%endif
 
 # remove unnecessary scripts for building documentation
 rm -rf doc/build
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %check
 export PYTHONPATH=.
 %{__python} setup.py develop -d .
 nosetests
 
+%if 0%{?with_python3}
+pushd %{py3dir}
+export PYTHONPATH=.
+%{__python3} setup.py develop -d .
+### FIXME: No python-nose3 package yet
+#nosetests3
+popd
+%endif
+
+
 %files
 %defattr(-,root,root,-)
 %doc README LICENSE PKG-INFO CHANGES doc examples
+# beta2 will have a cextension, switch to sitearch then
 %{python_sitelib}/*
 
+%if 0%{?with_python3}
+%files -n python3-sqlalchemy
+%defattr(-,root,root,-)
+%doc LICENSE PKG-INFO doc examples
+# beta2 will have a cextension, switch to sitearch then
+%{python3_sitelib}/*
+%endif # with_python3
+
 %changelog
+* Sun Mar 7 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6-0.2.beta1
+- Build python3 package
+
 * Tue Mar 2 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6-0.1.beta1
 - 0.6 beta1 upstream release
 
