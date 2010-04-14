@@ -1,6 +1,5 @@
 %if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %endif
 
 %if 0%{?fedora} > 12 || 0%{?rhel} > 6
@@ -12,13 +11,13 @@
 
 Name:           python-sqlalchemy
 Version:        0.6
-Release:        0.2.beta1%{?dist}
+Release:        0.3.beta3%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}beta1.tar.gz
+Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}beta3.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
@@ -32,12 +31,9 @@ BuildRequires: python-nose
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
 BuildRequires: python3-setuptools
-# No pythn3-nose package in fedora yet
+# No python3-nose package in fedora yet
 #BuildRequires:  python3-nose
 %endif
-
-# beta2 will include a cextension.  Remove this then
-BuildArch: noarch
 
 %description
 SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
@@ -68,7 +64,7 @@ This package includes the python 3 version of the module.
 %endif # with_python3
 
 %prep
-%setup -q -n %{srcname}-%{version}beta1
+%setup -q -n %{srcname}-%{version}beta3
 
 sed -i 's/\r//' examples/dynamic_dict/dynamic_dict.py
 
@@ -78,15 +74,14 @@ cp -a . %{py3dir}
 %endif # with_python3
 
 %build
-# cextensions coming for beta2
-CFLAGS="%{optflags}" %{__python} setup.py build #--with-cextensions
+CFLAGS="%{optflags}" %{__python} setup.py --with-cextensions build
 
 %if 0%{with_python3}
 pushd %{py3dir}
 # Convert tests, examples, source to python3
 %{__python3} sa2to3.py --no-diffs -w lib test examples
-# cextensions coming for beta2
-CFLAGS="%{optflags}" %{__python3} setup.py build #--with-cextensions
+# Currently the cextension doesn't work with py3
+CFLAGS="%{optflags}" %{__python3} setup.py build
 popd
 %endif
 
@@ -94,7 +89,7 @@ popd
 rm -rf %{buildroot}
 
 mkdir -p %{buildroot}%{python_sitelib}
-%{__python} setup.py install --skip-build --root %{buildroot}
+%{__python} setup.py --with-cextensions install --skip-build --root %{buildroot}
 
 %if 0%{?with_python3}
 pushd %{py3dir}
@@ -112,7 +107,8 @@ rm -rf %{buildroot}
 %check
 export PYTHONPATH=.
 %{__python} setup.py develop -d .
-nosetests
+# Skip the profile connection tests
+nosetests -e 'test_.*_connect'
 
 %if 0%{?with_python3}
 pushd %{py3dir}
@@ -127,18 +123,22 @@ popd
 %files
 %defattr(-,root,root,-)
 %doc README LICENSE PKG-INFO CHANGES doc examples
-# beta2 will have a cextension, switch to sitearch then
-%{python_sitelib}/*
+%{python_sitearch}/*
 
 %if 0%{?with_python3}
 %files -n python3-sqlalchemy
 %defattr(-,root,root,-)
 %doc LICENSE PKG-INFO doc examples
-# beta2 will have a cextension, switch to sitearch then
 %{python3_sitelib}/*
 %endif # with_python3
 
 %changelog
+* Tue Apr 13 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6-0.4.beta3
+- Build beta3
+
+* Fri Mar 19 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6-0.3.beta2
+- Build beta2 with cextension
+
 * Sun Mar 7 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6-0.2.beta1
 - Build python3 package
 
