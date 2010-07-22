@@ -11,7 +11,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.6.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -133,6 +133,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Thu Jul 22 2010 David Malcolm <dmalcolm@redhat.com>
+- Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
+
 * Thu Jun 24 2010 Nils Philippsen <nils@redhat.com> - 0.6.1-1
 - 0.6.1 upstream release
 
