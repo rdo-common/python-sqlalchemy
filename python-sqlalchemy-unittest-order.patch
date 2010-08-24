@@ -1,0 +1,126 @@
+Index: SQLAlchemy-0.6.3/test/orm/test_query.py
+===================================================================
+--- SQLAlchemy-0.6.3.orig/test/orm/test_query.py
++++ SQLAlchemy-0.6.3/test/orm/test_query.py
+@@ -2278,10 +2278,10 @@ class JoinTest(QueryTest, AssertsCompile
+         # this is the first test where we are joining "backwards" - from AdAlias to User even though
+         # the query is against User
+         q = sess.query(User, AdAlias)
+-        l = q.join(AdAlias.user).filter(User.name=='ed')
++        l = q.join(AdAlias.user).filter(User.name=='ed').order_by(User.id, AdAlias.id)
+         eq_(l.all(), [(user8, address2),(user8, address3),(user8, address4),])
+ 
+-        q = sess.query(User, AdAlias).select_from(join(AdAlias, User, AdAlias.user)).filter(User.name=='ed')
++        q = sess.query(User, AdAlias).select_from(join(AdAlias, User, AdAlias.user)).filter(User.name=='ed').order_by(User.id, AdAlias.id)
+         eq_(l.all(), [(user8, address2),(user8, address3),(user8, address4),])
+         
+     def test_implicit_joins_from_aliases(self):
+@@ -2636,14 +2636,20 @@ class InstancesTest(QueryTest, AssertsCo
+             , dialect=default.DefaultDialect())
+                 
+         def go():
+-            assert self.static.user_address_result == q.all()
++            result = q.all()
++            for user in result:
++                user.addresses = sorted(user.addresses, key=lambda x: x.id)
++            assert self.static.user_address_result == result
+         self.assert_sql_count(testing.db, go, 1)
+         sess.expunge_all()
+ 
+         adalias = addresses.alias()
+         q = sess.query(User).select_from(users.outerjoin(adalias)).options(contains_eager(User.addresses, alias=adalias))
+         def go():
+-            eq_(self.static.user_address_result, q.order_by(User.id).all())
++            result = q.order_by(User.id).all()
++            for user in result:
++                user.addresses = sorted(user.addresses, key=lambda x: x.id)
++            eq_(self.static.user_address_result, result)
+         self.assert_sql_count(testing.db, go, 1)
+         sess.expunge_all()
+ 
+@@ -2771,21 +2777,21 @@ class MixedEntitiesTest(QueryTest, Asser
+         sel = users.select(User.id.in_([7, 8])).alias()
+         q = sess.query(User)
+         q2 = q.select_from(sel).values(User.name)
+-        eq_(list(q2), [(u'jack',), (u'ed',)])
++        eq_(sorted(list(q2)), sorted([(u'jack',), (u'ed',)]))
+     
+         q = sess.query(User)
+         q2 = q.order_by(User.id).values(User.name, User.name + " " + cast(User.id, String(50)))
+-        eq_(list(q2), [(u'jack', u'jack 7'), (u'ed', u'ed 8'), (u'fred', u'fred 9'), (u'chuck', u'chuck 10')])
++        eq_(sorted(list(q2)), sorted([(u'jack', u'jack 7'), (u'ed', u'ed 8'), (u'fred', u'fred 9'), (u'chuck', u'chuck 10')]))
+     
+         q2 = q.join('addresses').filter(User.name.like('%e%')).order_by(User.id, Address.id).values(User.name, Address.email_address)
+-        eq_(list(q2), [(u'ed', u'ed@wood.com'), (u'ed', u'ed@bettyboop.com'), (u'ed', u'ed@lala.com'), (u'fred', u'fred@fred.com')])
++        eq_(sorted(list(q2)), sorted([(u'ed', u'ed@wood.com'), (u'ed', u'ed@bettyboop.com'), (u'ed', u'ed@lala.com'), (u'fred', u'fred@fred.com')]))
+     
+         q2 = q.join('addresses').filter(User.name.like('%e%')).order_by(desc(Address.email_address)).slice(1, 3).values(User.name, Address.email_address)
+-        eq_(list(q2), [(u'ed', u'ed@wood.com'), (u'ed', u'ed@lala.com')])
++        eq_(sorted(list(q2)), sorted([(u'ed', u'ed@wood.com'), (u'ed', u'ed@lala.com')]))
+     
+         adalias = aliased(Address)
+         q2 = q.join(('addresses', adalias)).filter(User.name.like('%e%')).values(User.name, adalias.email_address)
+-        eq_(list(q2), [(u'ed', u'ed@wood.com'), (u'ed', u'ed@bettyboop.com'), (u'ed', u'ed@lala.com'), (u'fred', u'fred@fred.com')])
++        eq_(sorted(list(q2)), sorted([(u'ed', u'ed@wood.com'), (u'ed', u'ed@bettyboop.com'), (u'ed', u'ed@lala.com'), (u'fred', u'fred@fred.com')]))
+     
+         q2 = q.values(func.count(User.name))
+         assert q2.next() == (4,)
+@@ -2799,7 +2805,7 @@ class MixedEntitiesTest(QueryTest, Asser
+ 
+         # whereas this uses users.c.xxx, is not aliased and creates a new join
+         q2 = q.select_from(sel).filter(users.c.id==8).filter(users.c.id>sel.c.id).values(users.c.name, sel.c.name, User.name)
+-        eq_(list(q2), [(u'ed', u'jack', u'jack')])
++        eq_(sorted(list(q2)), sorted([(u'ed', u'jack', u'jack')]))
+ 
+     @testing.fails_on('mssql', 'FIXME: unknown')
+     def test_values_specific_order_by(self):
+Index: SQLAlchemy-0.6.3/test/orm/test_eager_relations.py
+===================================================================
+--- SQLAlchemy-0.6.3.orig/test/orm/test_eager_relations.py
++++ SQLAlchemy-0.6.3/test/orm/test_eager_relations.py
+@@ -598,7 +598,9 @@ class EagerTest(_fixtures.FixtureTest, t
+         mapper(Order, orders)
+ 
+         sess = create_session()
+-        eq_(sess.query(User).first(),
++        result = sess.query(User).order_by(User.id).first()
++        result.orders = sorted(result.orders, key=lambda x: x.id)
++        eq_(result,
+             User(name=u'jack',orders=[
+                 Order(address_id=1,description=u'order 1',isopen=0,user_id=7,id=1),
+                 Order(address_id=1,description=u'order 3',isopen=1,user_id=7,id=3),
+Index: SQLAlchemy-0.6.3/test/orm/test_expire.py
+===================================================================
+--- SQLAlchemy-0.6.3.orig/test/orm/test_expire.py
++++ SQLAlchemy-0.6.3/test/orm/test_expire.py
+@@ -734,6 +734,8 @@ class ExpireTest(_fixtures.FixtureTest):
+ 
+         sess = create_session()
+         userlist = sess.query(User).order_by(User.id).all()
++        for user in userlist:
++            user.addresses = sorted(user.addresses, key=lambda x: x.id)
+         assert self.static.user_address_result == userlist
+         assert len(list(sess)) == 9
+         sess.expire_all()
+@@ -742,6 +744,8 @@ class ExpireTest(_fixtures.FixtureTest):
+ 
+         userlist = sess.query(User).order_by(User.id).all()
+         u = userlist[1]
++        for user in userlist:
++            user.addresses = sorted(user.addresses, key=lambda x: x.id)
+         eq_(self.static.user_address_result, userlist)
+         assert len(list(sess)) == 9
+ 
+Index: SQLAlchemy-0.6.3/test/orm/test_mapper.py
+===================================================================
+--- SQLAlchemy-0.6.3.orig/test/orm/test_mapper.py
++++ SQLAlchemy-0.6.3/test/orm/test_mapper.py
+@@ -1269,6 +1269,8 @@ class OptionsTest(_fixtures.FixtureTest)
+         # first test straight eager load, 1 statement
+         def go():
+             l = sess.query(User).order_by(User.id).all()
++            for user in l:
++                user.addresses = sorted(user.addresses, key=lambda x: x.id)
+             eq_(l, self.static.user_address_result)
+         self.sql_count_(1, go)
+ 

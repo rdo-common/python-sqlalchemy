@@ -10,21 +10,22 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.6.1
-Release:        2%{?dist}
+Version:        0.6.3
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+Patch0: python-sqlalchemy-unittest-order.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
-%if 0%{?fedora} > 12 || 0%{?rhel} > 5
-BuildRequires: python-setuptools
-%else
+%if 0%{?fedora} && 0%{?fedora} < 13
 BuildRequires:  python-setuptools-devel >= 0.6c3
+%else
+BuildRequires: python-setuptools
 %endif
 BuildRequires: python-nose
 
@@ -65,6 +66,7 @@ This package includes the python 3 version of the module.
 
 %prep
 %setup -q -n %{srcname}-%{version}
+%patch0 -p1 -b .order
 
 sed -i 's/\r//' examples/dynamic_dict/dynamic_dict.py
 
@@ -76,7 +78,7 @@ cp -a . %{py3dir}
 %build
 CFLAGS="%{optflags}" %{__python} setup.py --with-cextensions build
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 pushd %{py3dir}
 # Convert tests, examples, source to python3
 %{__python3} sa2to3.py --no-diffs -w lib test examples
@@ -107,7 +109,6 @@ rm -rf %{buildroot}
 %check
 export PYTHONPATH=.
 %{__python} setup.py develop -d .
-# Skip the profile connection tests
 nosetests -e 'test_.*_connect'
 
 %if 0%{?with_python3}
@@ -133,6 +134,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Mon Aug 23 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.3-1
+- 0.6.3 upstream release
+
 * Thu Jul 22 2010 David Malcolm <dmalcolm@redhat.com>
 - Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
 
