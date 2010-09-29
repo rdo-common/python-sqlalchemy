@@ -10,7 +10,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.6.3
+Version:        0.6.4
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -63,6 +63,13 @@ domain.
 
 This package includes the python 3 version of the module.
 %endif # with_python3
+
+# Filter unnecessary dependencies
+%{?filter_setup:
+%filter_provides_in %{python_sitearch}.*\.so$
+%filter_provides_in %{python3_sitearch}.*\.so$
+%filter_setup
+}
 
 %prep
 %setup -q -n %{srcname}-%{version}
@@ -134,6 +141,10 @@ popd
 %endif # with_python3
 
 %changelog
+* Wed Sep 29 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.4-1
+- 0.6.4 upstream release
+- Filter out the C extensions from provides
+
 * Mon Aug 23 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.3-1
 - 0.6.3 upstream release
 
