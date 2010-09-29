@@ -11,7 +11,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.6.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -141,9 +141,11 @@ popd
 %endif # with_python3
 
 %changelog
-* Wed Sep 29 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.4-1
-- 0.6.4 upstream release
+* Wed Sep 29 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.4-2
 - Filter out the C extensions from provides
+
+* Tue Sep 07 2010 Luke Macken <lmacken@redhat.com> - 0.6.4-1
+- 0.6.4 upstream release
 
 * Mon Aug 23 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.3-1
 - 0.6.3 upstream release
