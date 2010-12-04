@@ -10,15 +10,16 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.6.4
-Release:        2%{?dist}
+Version:        0.6.5
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-Patch0: python-sqlalchemy-unittest-order.patch
+# Submitted upstream: http://www.sqlalchemy.org/trac/ticket/1888
+Patch0:         python-sqlalchemy-unittest-order.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
@@ -141,6 +142,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Fri Dec 3 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.5-1
+- 0.6.5 Upstream release
+
 * Wed Sep 29 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.4-2
 - Filter out the C extensions from provides
 
