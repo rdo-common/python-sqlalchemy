@@ -10,7 +10,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.6.5
+Version:        0.6.6
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -19,7 +19,6 @@ License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
 # Submitted upstream: http://www.sqlalchemy.org/trac/ticket/1888
-Patch0:         python-sqlalchemy-unittest-order.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
@@ -74,7 +73,6 @@ This package includes the python 3 version of the module.
 
 %prep
 %setup -q -n %{srcname}-%{version}
-%patch0 -p1 -b .order
 
 sed -i 's/\r//' examples/dynamic_dict/dynamic_dict.py
 
@@ -142,6 +140,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Mon Jan 17 2011 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.6-1
+- 0.6.6 Upstream release
+
 * Fri Dec 3 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.5-1
 - 0.6.5 Upstream release
 
