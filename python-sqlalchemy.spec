@@ -25,15 +25,14 @@ BuildRequires:  python2-devel
 %if 0%{?fedora} && 0%{?fedora} < 13
 BuildRequires:  python-setuptools-devel >= 0.6c3
 %else
-BuildRequires: python-setuptools
+BuildRequires:  python-setuptools
 %endif
-BuildRequires: python-nose
+BuildRequires:  python-nose
 
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
-BuildRequires: python3-setuptools
-# No python3-nose package in fedora yet
-#BuildRequires:  python3-nose
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-nose
 %endif
 
 %description
@@ -111,16 +110,11 @@ rm -rf doc/build
 rm -rf %{buildroot}
 
 %check
-export PYTHONPATH=.
-%{__python} setup.py develop -d .
-nosetests -e 'test_.*_connect'
+./sqla_nose.py
 
 %if 0%{?with_python3}
 pushd %{py3dir}
-export PYTHONPATH=.
-%{__python3} setup.py develop -d .
-### FIXME: No python-nose3 package yet
-#nosetests3
+./sqla_nose.py
 popd
 %endif
 
@@ -141,6 +135,7 @@ popd
 * Mon Jun 06 2011 Nils Philippsen <nils@redhat.com> - 0.7.1-1
 - 0.7.1 Upstream release
 - no need to fix examples/dynamic_dict/dynamic_dict.py anymore
+- use sqla_nose.py to fix %check
 
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
