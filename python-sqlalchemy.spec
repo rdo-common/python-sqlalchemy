@@ -110,11 +110,11 @@ rm -rf doc/build
 rm -rf %{buildroot}
 
 %check
-./sqla_nose.py
+%{__python} ./sqla_nose.py
 
 %if 0%{?with_python3}
 pushd %{py3dir}
-./sqla_nose.py
+%{__python3} ./sqla_nose.py
 popd
 %endif
 
