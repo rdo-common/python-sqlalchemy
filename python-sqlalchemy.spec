@@ -74,8 +74,6 @@ This package includes the python 3 version of the module.
 %prep
 %setup -q -n %{srcname}-%{version}
 
-sed -i 's/\r//' examples/dynamic_dict/dynamic_dict.py
-
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
@@ -142,6 +140,7 @@ popd
 %changelog
 * Mon Jun 06 2011 Nils Philippsen <nils@redhat.com> - 0.7.1-1
 - 0.7.1 Upstream release
+- no need to fix examples/dynamic_dict/dynamic_dict.py anymore
 
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
