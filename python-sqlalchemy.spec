@@ -10,7 +10,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.7.1
+Version:        0.7.2
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -18,7 +18,6 @@ Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-# Submitted upstream: http://www.sqlalchemy.org/trac/ticket/1888
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
@@ -132,6 +131,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Mon Aug 1 2011 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.2-1
+- Upstream bugfix release
+
 * Mon Jun 06 2011 Nils Philippsen <nils@redhat.com> - 0.7.1-1
 - 0.7.1 Upstream release
 - no need to fix examples/dynamic_dict/dynamic_dict.py anymore
