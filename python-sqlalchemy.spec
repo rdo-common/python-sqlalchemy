@@ -10,7 +10,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.7.2
+Version:        0.7.3
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -131,6 +131,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Mon Oct 17 2011 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.3-1
+- Upstream bugfix release
+
 * Mon Aug 1 2011 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.2-1
 - Upstream bugfix release
 
