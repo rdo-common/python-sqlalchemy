@@ -10,16 +10,14 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.7.1
-Release:        3%{?dist}
+Version:        0.7.2
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-# Hack for old python-nose in RHEL6
-Patch100:       hack_test_old_nose.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
@@ -73,7 +71,6 @@ This package includes the python 3 version of the module.
 
 %prep
 %setup -q -n %{srcname}-%{version}
-%patch100 -p1 -b .oldnose
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -134,8 +131,8 @@ popd
 %endif # with_python3
 
 %changelog
-* Wed Jul 13 2011 Rahul Sundaram <sundaram@fedoraproject.org> - 0.7.1-2
-- Disable check
+* Mon Aug 1 2011 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.2-1
+- Upstream bugfix release
 
 * Mon Jun 06 2011 Nils Philippsen <nils@redhat.com> - 0.7.1-1
 - 0.7.1 Upstream release
