@@ -11,7 +11,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.7.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -131,6 +131,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Tue Jan 10 2012 Nils Philippsen <nils@redhat.com> - 0.7.3-2
+- rebuild for gcc 4.7
+
 * Mon Oct 17 2011 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.3-1
 - Upstream bugfix release
 
