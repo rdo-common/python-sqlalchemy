@@ -120,7 +120,7 @@ popd
 
 %files
 %defattr(-,root,root,-)
-%doc README LICENSE PKG-INFO CHANGES doc examples
+%doc README.rst LICENSE PKG-INFO CHANGES doc examples
 %{python_sitearch}/*
 
 %if 0%{?with_python3}
@@ -133,6 +133,7 @@ popd
 %changelog
 * Mon Jan 30 2012 Nils Philippsen <nils@redhat.com> - 0.7.5-1
 - Upstream bugfix release
+- package README.rst instead of README as documentation
 
 * Tue Jan 10 2012 Nils Philippsen <nils@redhat.com> - 0.7.3-2
 - rebuild for gcc 4.7
