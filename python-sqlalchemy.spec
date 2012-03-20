@@ -10,7 +10,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.7.5
+Version:        0.7.6
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -131,6 +131,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Tue Mar 20 2012 Nils Philippsen <nils@redhat.com> - 0.7.6-1
+- Upstream bugfix release
+
 * Mon Jan 30 2012 Nils Philippsen <nils@redhat.com> - 0.7.5-1
 - Upstream bugfix release
 - package README.rst instead of README as documentation
