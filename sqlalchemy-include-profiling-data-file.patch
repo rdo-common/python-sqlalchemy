@@ -1,0 +1,12 @@
+diff -r 73b9d2cfde34 MANIFEST.in
+--- a/MANIFEST.in	Sun Aug 12 21:07:24 2012 -0400
++++ b/MANIFEST.in	Mon Aug 13 10:01:10 2012 -0700
+@@ -3,7 +3,7 @@
+ 
+ recursive-include doc *.html *.css *.txt *.js *.jpg *.png *.py Makefile *.rst *.mako *.sty
+ recursive-include examples *.py *.xml
+-recursive-include test *.py *.dat
++recursive-include test *.py *.dat *.txt
+ 
+ # include the c extensions, which otherwise
+ # don't come in if --with-cextensions isn't specified.
