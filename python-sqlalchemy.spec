@@ -1,4 +1,4 @@
-%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
+%if ! 0%{?rhel} > 5
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 %endif
 
@@ -11,21 +11,26 @@
 
 Name:           python-sqlalchemy
 Version:        0.7.8
-Release:        3%{?dist}
+Release:        4.20120813hg8535%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+# hg clone -u rel_0_7 -r 8535 http://hg.sqlalchemy.org/sqlalchemy
+# cd sqlalchemy
+# Apply Patch100
+# python setup.py sdist
+# tarball will be in the dist/ subdirectory
+# Package a snapshot of 0.7 to fix unittests on python3.3
+#Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+Source0: SQLAlchemy-0.7.9dev.tar.gz
+# This is just necessary for setup.py sdist in the current snapshot
+Patch100: sqlalchemy-include-profiling-data-file.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
-%if 0%{?fedora} && 0%{?fedora} < 13
-BuildRequires:  python-setuptools-devel >= 0.6c3
-%else
 BuildRequires:  python-setuptools
-%endif
 BuildRequires:  python-nose
 
 %if 0%{?with_python3}
@@ -70,7 +75,7 @@ This package includes the python 3 version of the module.
 }
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n %{srcname}-0.7.9dev
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -131,6 +136,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Mon Aug 13 2012 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.8-4.20120813hg8535
+- Update to a snapshot to fix unittest errors with python-3.3
+
 * Fri Aug  3 2012 David Malcolm <dmalcolm@redhat.com> - 0.7.8-3
 - remove rhel logic from with_python3 conditional
 
