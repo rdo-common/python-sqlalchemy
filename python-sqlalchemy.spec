@@ -10,8 +10,8 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.7.8
-Release:        4.20120813hg8535%{?dist}
+Version:        0.8.0
+Release:        0.1.b1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -23,10 +23,11 @@ URL:            http://www.sqlalchemy.org/
 # python setup.py sdist
 # tarball will be in the dist/ subdirectory
 # Package a snapshot of 0.7 to fix unittests on python3.3
-#Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-Source0: SQLAlchemy-0.7.9dev.tar.gz
+Source0:        http://downloads.sf.net/%{srcname}/%{srcname}-%{version}b1.tar.gz
+#Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}b1.tar.gz
+#Source0: SQLAlchemy-0.7.9dev.tar.gz
 # This is just necessary for setup.py sdist in the current snapshot
-Patch100: sqlalchemy-include-profiling-data-file.patch
+#Patch100: sqlalchemy-include-profiling-data-file.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
@@ -75,7 +76,7 @@ This package includes the python 3 version of the module.
 }
 
 %prep
-%setup -q -n %{srcname}-0.7.9dev
+%setup -q -n %{srcname}-0.8.0b1
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -136,6 +137,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Thu Nov  1 2012 Toshio Kuratomi <toshio@fedoraproject.org> - 0.8.0-0.1.b1
+- Update to 0.8.0 beta
+
 * Mon Aug 13 2012 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.8-4.20120813hg8535
 - Update to a snapshot to fix unittest errors with python-3.3
 
