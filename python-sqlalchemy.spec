@@ -11,23 +11,14 @@
 
 Name:           python-sqlalchemy
 Version:        0.8.0
-Release:        0.2.b1%{?dist}
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-# hg clone -u rel_0_7 -r 8535 http://hg.sqlalchemy.org/sqlalchemy
-# cd sqlalchemy
-# Apply Patch100
-# python setup.py sdist
-# tarball will be in the dist/ subdirectory
-# Package a snapshot of 0.7 to fix unittests on python3.3
-Source0:        http://downloads.sf.net/%{srcname}/%{srcname}-%{version}b1.tar.gz
-#Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}b1.tar.gz
-#Source0: SQLAlchemy-0.7.9dev.tar.gz
-# This is just necessary for setup.py sdist in the current snapshot
-#Patch100: sqlalchemy-include-profiling-data-file.patch
+Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+Patch0: sqlalchemy-unittest-ordering.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
@@ -69,14 +60,11 @@ This package includes the python 3 version of the module.
 %endif # with_python3
 
 # Filter unnecessary dependencies
-%{?filter_setup:
-%filter_provides_in %{python_sitearch}.*\.so$
-%filter_provides_in %{python3_sitearch}.*\.so$
-%filter_setup
-}
+%global __provides_exclude_from ^(%{python_sitearch}|%{python3_sitearch})/.*\\.so$
 
 %prep
-%setup -q -n %{srcname}-0.8.0b1
+%setup -q -n %{srcname}-0.8.0
+%patch0 -p1 -b .ordering
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -90,7 +78,7 @@ CFLAGS="%{optflags}" %{__python} setup.py --with-cextensions build
 pushd %{py3dir}
 # Convert tests, examples, source to python3
 %{__python3} sa2to3.py --no-diffs -w lib test examples
-# Currently the cextension doesn't work with py3
+# Currently the cextension doesn't work with python3
 CFLAGS="%{optflags}" %{__python3} setup.py build
 popd
 %endif
@@ -104,6 +92,7 @@ mkdir -p %{buildroot}%{python_sitelib}
 %if 0%{?with_python3}
 pushd %{py3dir}
 mkdir -p %{buildroot}%{python3_sitelib}
+# Currently the cextension doesn't work with python3
 %{__python3} setup.py install --skip-build --root %{buildroot}
 popd
 %endif
@@ -137,6 +126,10 @@ popd
 %endif # with_python3
 
 %changelog
+* Fri Apr 12 2013 Toshio Kuratomi <toshio@fedoraproject.org> - 0.8.0-1
+- Final release of 0.8.0
+- Fix for a unittest that assumes order in dicts
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.0-0.2.b1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
