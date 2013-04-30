@@ -1,0 +1,21 @@
+--- sqla_nose.py	2013-04-27 14:24:34.000000000 -0700
++++ sqla_nose2.py	2013-04-29 16:49:57.466102387 -0700
+@@ -10,14 +10,15 @@
+ import imp
+ import nose
+ 
+-
++import glob
+ from os import path
+-for pth in ['./lib']:
++
++for pth in glob.glob('build/lib*'):
+     sys.path.insert(0, path.join(path.dirname(path.abspath(__file__)), pth))
+ 
+ # installing without importing SQLAlchemy, so that coverage includes
+ # SQLAlchemy itself.
+-path = "lib/sqlalchemy/testing/plugin/noseplugin.py"
++path = glob.glob("build/lib*/sqlalchemy/testing/plugin/noseplugin.py")[0]
+ noseplugin = imp.load_source("noseplugin", path)
+ 
+ 
