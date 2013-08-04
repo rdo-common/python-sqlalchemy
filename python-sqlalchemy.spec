@@ -11,7 +11,7 @@
 
 Name:           python-sqlalchemy
 Version:        0.8.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -128,6 +128,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Mon Apr 29 2013 Toshio Kuratomi <toshio@fedoraproject.org> - 0.8.1-1
 - Upstream bugfix
 - Stop calling sa2to3 explicitly on the library.  It seems to break mapper.py's
