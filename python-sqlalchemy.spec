@@ -10,8 +10,8 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.8.1
-Release:        2%{?dist}
+Version:        0.8.2
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -19,12 +19,12 @@ License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
 Patch0: sqlalchemy-nose-use-build.patch
-Patch1: sqlalchemy-test-bidirectional-order.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 BuildRequires:  python-nose
+BuildRequires:  python-mock
 
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
@@ -66,7 +66,6 @@ This package includes the python 3 version of the module.
 %prep
 %setup -q -n %{srcname}-%{version}
 %patch0 -p0
-%patch1 -p1
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -128,6 +127,10 @@ popd
 %endif # with_python3
 
 %changelog
+* Wed Aug 14 2013 Nils Philippsen <nils@redhat.com> - 0.8.2-1
+- version 0.8.2, upstream bugfix release
+- drop obsolete sqlalchemy-test-bidirectional-order patch
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
