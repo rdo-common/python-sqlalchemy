@@ -130,6 +130,7 @@ popd
 * Wed Aug 14 2013 Nils Philippsen <nils@redhat.com> - 0.8.2-1
 - version 0.8.2, upstream bugfix release
 - drop obsolete sqlalchemy-test-bidirectional-order patch
+- fix bogus date in changelog
 
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
@@ -286,7 +287,7 @@ popd
 * Tue Sep 11 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.4.beta5
 - Update to 0.4beta5.
 
-* Fri Sep 06 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.4.beta4
+* Fri Sep 07 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.4.beta4
 - setuptools has been fixed.
 
 * Fri Aug 31 2007 Toshio Kuratomi <a.badger@gmail.com> - 0.4.0-0.3.beta4
