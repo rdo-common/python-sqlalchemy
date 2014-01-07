@@ -77,8 +77,6 @@ CFLAGS="%{optflags}" %{__python} setup.py --with-cextensions build
 
 %if 0%{?with_python3}
 pushd %{py3dir}
-# Convert tests and examples to python3
-%{__python3} sa2to3.py --no-diffs -w test examples
 # Currently the cextension doesn't work with python3
 CFLAGS="%{optflags}" %{__python3} setup.py build
 popd
@@ -129,6 +127,7 @@ popd
 %changelog
 * Tue Jan 07 2014 Nils Philippsen <nils@redhat.com> - 0.9.1-1
 - version 0.9.1, upstream feature and bugfix release
+- no need to use 2to3 for python 3.x anymore
 
 * Mon Dec 09 2013 Nils Philippsen <nils@redhat.com> - 0.8.4-1
 - version 0.8.4, upstream bugfix release
