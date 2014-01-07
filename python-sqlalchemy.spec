@@ -21,7 +21,7 @@ Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%
 Patch0: sqlalchemy-nose-use-build.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  python2-devel
+BuildRequires:  python2-devel >= 2.6
 BuildRequires:  python-setuptools
 BuildRequires:  python-nose
 BuildRequires:  python-mock
@@ -127,6 +127,7 @@ popd
 - version 0.9.1, upstream feature and bugfix release
 - no need to use 2to3 for python 3.x anymore
 - build C extension for python 3.x
+- require python2-devel >= 2.6 for building
 
 * Mon Dec 09 2013 Nils Philippsen <nils@redhat.com> - 0.8.4-1
 - version 0.8.4, upstream bugfix release
