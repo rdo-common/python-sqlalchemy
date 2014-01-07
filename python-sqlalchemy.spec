@@ -77,8 +77,7 @@ CFLAGS="%{optflags}" %{__python} setup.py --with-cextensions build
 
 %if 0%{?with_python3}
 pushd %{py3dir}
-# Currently the cextension doesn't work with python3
-CFLAGS="%{optflags}" %{__python3} setup.py build
+CFLAGS="%{optflags}" %{__python3} setup.py --with-cextensions build
 popd
 %endif
 
@@ -91,8 +90,7 @@ mkdir -p %{buildroot}%{python_sitelib}
 %if 0%{?with_python3}
 pushd %{py3dir}
 mkdir -p %{buildroot}%{python3_sitelib}
-# Currently the cextension doesn't work with python3
-%{__python3} setup.py install --skip-build --root %{buildroot}
+%{__python3} setup.py --with-cextensions install --skip-build --root %{buildroot}
 popd
 %endif
 
@@ -121,13 +119,14 @@ popd
 %files -n python3-sqlalchemy
 %defattr(-,root,root,-)
 %doc LICENSE PKG-INFO doc examples
-%{python3_sitelib}/*
+%{python3_sitearch}/*
 %endif # with_python3
 
 %changelog
 * Tue Jan 07 2014 Nils Philippsen <nils@redhat.com> - 0.9.1-1
 - version 0.9.1, upstream feature and bugfix release
 - no need to use 2to3 for python 3.x anymore
+- build C extension for python 3.x
 
 * Mon Dec 09 2013 Nils Philippsen <nils@redhat.com> - 0.8.4-1
 - version 0.8.4, upstream bugfix release
