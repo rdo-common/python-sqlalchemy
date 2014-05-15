@@ -18,7 +18,7 @@ Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-Patch0: sqlalchemy-nose-use-build.patch
+Patch0:         python-sqlalchemy-0.9.4-nose-use-build.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel >= 2.6
@@ -65,7 +65,7 @@ This package includes the python 3 version of the module.
 
 %prep
 %setup -q -n %{srcname}-%{version}
-%patch0 -p0
+%patch0 -p1 -b .nose-use-build
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}

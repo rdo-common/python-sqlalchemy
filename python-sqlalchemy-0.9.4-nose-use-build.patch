@@ -1,8 +1,9 @@
---- sqla_nose.py	2013-04-27 14:24:34.000000000 -0700
-+++ sqla_nose2.py	2013-04-29 16:49:57.466102387 -0700
-@@ -10,14 +10,15 @@
- import imp
+diff -up SQLAlchemy-0.9.4/sqla_nose.py.nose-use-build SQLAlchemy-0.9.4/sqla_nose.py
+--- SQLAlchemy-0.9.4/sqla_nose.py.nose-use-build	2014-03-29 00:28:17.000000000 +0100
++++ SQLAlchemy-0.9.4/sqla_nose.py	2014-05-15 10:12:18.260041402 +0200
+@@ -11,14 +11,15 @@ import imp
  import nose
+ import warnings
  
 -
 +import glob
