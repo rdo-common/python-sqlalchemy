@@ -1,7 +1,7 @@
-diff -up SQLAlchemy-0.9.4/sqla_nose.py.nose-use-build SQLAlchemy-0.9.4/sqla_nose.py
---- SQLAlchemy-0.9.4/sqla_nose.py.nose-use-build	2014-03-29 00:28:17.000000000 +0100
-+++ SQLAlchemy-0.9.4/sqla_nose.py	2014-05-15 10:12:18.260041402 +0200
-@@ -11,14 +11,15 @@ import imp
+diff -up SQLAlchemy-0.9.6/sqla_nose.py.nose-use-build SQLAlchemy-0.9.6/sqla_nose.py
+--- SQLAlchemy-0.9.6/sqla_nose.py.nose-use-build	2014-06-30 13:06:27.857585522 +0200
++++ SQLAlchemy-0.9.6/sqla_nose.py	2014-06-30 13:09:12.421227808 +0200
+@@ -10,14 +10,14 @@ import sys
  import nose
  import warnings
  
@@ -9,7 +9,6 @@ diff -up SQLAlchemy-0.9.4/sqla_nose.py.nose-use-build SQLAlchemy-0.9.4/sqla_nose
 +import glob
  from os import path
 -for pth in ['./lib']:
-+
 +for pth in glob.glob('build/lib*'):
      sys.path.insert(0, path.join(path.dirname(path.abspath(__file__)), pth))
  
@@ -17,6 +16,6 @@ diff -up SQLAlchemy-0.9.4/sqla_nose.py.nose-use-build SQLAlchemy-0.9.4/sqla_nose
  # SQLAlchemy itself.
 -path = "lib/sqlalchemy/testing/plugin/noseplugin.py"
 +path = glob.glob("build/lib*/sqlalchemy/testing/plugin/noseplugin.py")[0]
- noseplugin = imp.load_source("noseplugin", path)
- 
- 
+ if sys.version_info >= (3,3):
+     from importlib import machinery
+     noseplugin = machinery.SourceFileLoader("noseplugin", path).load_module()
