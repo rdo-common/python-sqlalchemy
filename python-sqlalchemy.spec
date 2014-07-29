@@ -19,6 +19,9 @@ License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
 Patch0:         python-sqlalchemy-0.9.7-nose-use-build.patch
+# Work around failing types test
+# https://bitbucket.org/zzzeek/sqlalchemy/issue/3144
+Patch1:         python-sqlalchemy-%{version}-types-test-workaround.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel >= 2.6
@@ -66,6 +69,7 @@ This package includes the python 3 version of the module.
 %prep
 %setup -q -n %{srcname}-%{version}
 %patch0 -p1 -b .nose-use-build
+%patch1 -p1 -b .types-test-workaround
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
