@@ -10,7 +10,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.9.6
+Version:        0.9.7
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -18,7 +18,7 @@ Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-Patch0:         python-sqlalchemy-0.9.6-nose-use-build.patch
+Patch0:         python-sqlalchemy-0.9.7-nose-use-build.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel >= 2.6
@@ -123,6 +123,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Tue Jul 29 2014 Nils Philippsen <nils@redhat.com> - 0.9.7-1
+- version 0.9.7, upstream feature and bugfix release
+
 * Mon Jun 30 2014 Nils Philippsen <nils@redhat.com> - 0.9.6-1
 - version 0.9.6, upstream feature and bugfix release
 
