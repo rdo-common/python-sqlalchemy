@@ -10,8 +10,8 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.9.7
-Release:        2%{?dist}
+Version:        0.9.8
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -19,9 +19,6 @@ License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
 Patch0:         python-sqlalchemy-0.9.7-nose-use-build.patch
-# Work around failing types test
-# https://bitbucket.org/zzzeek/sqlalchemy/issue/3144
-Patch1:         python-sqlalchemy-%{version}-types-test-workaround.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel >= 2.6
@@ -69,7 +66,6 @@ This package includes the python 3 version of the module.
 %prep
 %setup -q -n %{srcname}-%{version}
 %patch0 -p1 -b .nose-use-build
-%patch1 -p1 -b .types-test-workaround
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -127,6 +123,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Wed Oct 15 2014 Nils Philippsen <nils@redhat.com> - 0.9.8-1
+- version 0.9.8, upstream feature and bugfix release
+
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
