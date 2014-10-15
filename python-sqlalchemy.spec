@@ -1,5 +1,7 @@
-%if ! 0%{?rhel} > 5
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+%if 0%{?rhel} && 0%{?rhel} <= 6
+%{!?__python2: %global __python2 %{__python}}
+%{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
+%{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 %endif
 
 %if 0%{?fedora} > 12
@@ -61,7 +63,7 @@ This package includes the python 3 version of the module.
 %endif # with_python3
 
 # Filter unnecessary dependencies
-%global __provides_exclude_from ^(%{python_sitearch}|%{python3_sitearch})/.*\\.so$
+%global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 %prep
 %setup -q -n %{srcname}-%{version}
@@ -73,7 +75,7 @@ cp -a . %{py3dir}
 %endif # with_python3
 
 %build
-CFLAGS="%{optflags}" %{__python} setup.py --with-cextensions build
+CFLAGS="%{optflags}" %{__python2} setup.py --with-cextensions build
 
 %if 0%{?with_python3}
 pushd %{py3dir}
@@ -84,8 +86,8 @@ popd
 %install
 rm -rf %{buildroot}
 
-mkdir -p %{buildroot}%{python_sitelib}
-%{__python} setup.py --with-cextensions install --skip-build --root %{buildroot}
+mkdir -p %{buildroot}%{python2_sitelib}
+%{__python2} setup.py --with-cextensions install --skip-build --root %{buildroot}
 
 %if 0%{?with_python3}
 pushd %{py3dir}
@@ -101,7 +103,7 @@ rm -rf doc/build
 rm -rf %{buildroot}
 
 %check
-%{__python} ./sqla_nose.py
+%{__python2} ./sqla_nose.py
 
 %if 0%{?with_python3}
 pushd %{py3dir}
@@ -113,7 +115,7 @@ popd
 %files
 %defattr(-,root,root,-)
 %doc README.rst LICENSE PKG-INFO CHANGES doc examples
-%{python_sitearch}/*
+%{python2_sitearch}/*
 
 %if 0%{?with_python3}
 %files -n python3-sqlalchemy
@@ -125,6 +127,7 @@ popd
 %changelog
 * Wed Oct 15 2014 Nils Philippsen <nils@redhat.com> - 0.9.8-1
 - version 0.9.8, upstream feature and bugfix release
+- avoid using unversioned python macros
 
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
