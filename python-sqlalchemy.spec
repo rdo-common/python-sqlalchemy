@@ -20,18 +20,17 @@ Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        http://pypi.python.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-Patch0:         python-sqlalchemy-0.9.7-nose-use-build.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel >= 2.6
 BuildRequires:  python-setuptools
-BuildRequires:  python-nose
 BuildRequires:  python-mock
+BuildRequires:  pytest
 
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
-BuildRequires:  python3-nose
+BuildRequires:  python3-pytest
 %endif
 
 %description
@@ -67,7 +66,6 @@ This package includes the python 3 version of the module.
 
 %prep
 %setup -q -n %{srcname}-%{version}
-%patch0 -p1 -b .nose-use-build
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -103,11 +101,13 @@ rm -rf doc/build
 rm -rf %{buildroot}
 
 %check
-%{__python2} ./sqla_nose.py
+pytest2="py.test-$(%{__python2} -c 'from __future__ import print_function; import sys; vi=sys.version_info; print("{0}.{1}".format(vi.major, vi.minor))')"
+PYTHONPATH=. "$pytest2" test
 
 %if 0%{?with_python3}
 pushd %{py3dir}
-%{__python3} ./sqla_nose.py
+pytest3="py.test-$(%{__python3} -c 'from __future__ import print_function; import sys; vi=sys.version_info; print("{0}.{1}".format(vi.major, vi.minor))')"
+PYTHONPATH=. "$pytest3" test
 popd
 %endif
 
@@ -128,6 +128,7 @@ popd
 * Wed Oct 15 2014 Nils Philippsen <nils@redhat.com> - 0.9.8-1
 - version 0.9.8, upstream feature and bugfix release
 - avoid using unversioned python macros
+- use py.test instead of nose for tests
 
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
