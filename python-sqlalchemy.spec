@@ -12,7 +12,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        0.9.8
+Version:        0.9.9
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -125,6 +125,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Fri Apr 10 2015 Nils Philippsen <nils@redhat.com> - 0.9.9-1
+- version 0.9.9, upstream feature and bugfix release
+
 * Wed Oct 15 2014 Nils Philippsen <nils@redhat.com> - 0.9.8-1
 - version 0.9.8, upstream feature and bugfix release
 - avoid using unversioned python macros
