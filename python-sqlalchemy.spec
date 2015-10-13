@@ -13,7 +13,7 @@
 
 Name:           python-sqlalchemy
 Version:        1.0.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -125,6 +125,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Mon Oct 12 2015 Robert Kuska <rkuska@redhat.com> - 1.0.8-2
+- Rebuilt for Python3.5 rebuild
+
 * Fri Jul 24 2015 Nils Philippsen <nils@redhat.com> 1.0.8-1
 - version 1.0.8, upstream bugfix release
 
