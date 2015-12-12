@@ -12,8 +12,8 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.0.9
-Release:        2%{?dist}
+Version:        1.0.10
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -125,6 +125,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Sat Dec 12 2015 Kevin Fenzi <kevin@scrye.com> - 1.0.10-1
+- Update to 1.0.10. Fixes bug #1290945
+
 * Thu Nov 12 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.9-2
 - Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
 
