@@ -12,7 +12,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.0.10
+Version:        1.0.11
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -125,6 +125,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Fri Jan 08 2016 Kevin Fenzi <kevin@scrye.com> - 1.0.11-1
+- Update to 1.0.11. Fixes bug #1296757
+
 * Sat Dec 12 2015 Kevin Fenzi <kevin@scrye.com> - 1.0.10-1
 - Update to 1.0.10. Fixes bug #1290945
 
