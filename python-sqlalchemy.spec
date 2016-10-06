@@ -12,7 +12,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.0.14
+Version:        1.1.0
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -73,11 +73,11 @@ cp -a . %{py3dir}
 %endif # with_python3
 
 %build
-CFLAGS="%{optflags}" %{__python2} setup.py --with-cextensions build
+CFLAGS="%{optflags}" %{__python2} setup.py build
 
 %if 0%{?with_python3}
 pushd %{py3dir}
-CFLAGS="%{optflags}" %{__python3} setup.py --with-cextensions build
+CFLAGS="%{optflags}" %{__python3} setup.py build
 popd
 %endif
 
@@ -85,12 +85,12 @@ popd
 rm -rf %{buildroot}
 
 mkdir -p %{buildroot}%{python2_sitelib}
-%{__python2} setup.py --with-cextensions install --skip-build --root %{buildroot}
+%{__python2} setup.py install --skip-build --root %{buildroot}
 
 %if 0%{?with_python3}
 pushd %{py3dir}
 mkdir -p %{buildroot}%{python3_sitelib}
-%{__python3} setup.py --with-cextensions install --skip-build --root %{buildroot}
+%{__python3} setup.py install --skip-build --root %{buildroot}
 popd
 %endif
 
@@ -125,6 +125,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Thu Oct 06 2016 Kevin Fenzi <kevin@scrye.com> - 1.1.0-1
+- Update to 1.1.0. Fixes bug #1382203
+
 * Thu Aug 18 2016 Nils Philippsen <nils@redhat.com> - 1.0.14-1
 - version 1.0.14
 
