@@ -1,26 +1,18 @@
-%if 0%{?rhel} && 0%{?rhel} <= 6
-%{!?__python2: %global __python2 %{__python}}
-%{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
-%endif
-
-%if 0%{?fedora} > 12
+%if 0%{?fedora}
 %global with_python3 1
 %endif
-
 
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
 Version:        1.1.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python2-devel >= 2.6
 BuildRequires:  python-setuptools
@@ -44,10 +36,34 @@ domain.
 
 This package includes the python 2 version of the module.
 
+%package doc
+Summary:        Documentation for SQLAlchemy
+BuildArch:      noarch
+
+%description doc
+Documentation for SQLAlchemy
+
+%package -n python2-sqlalchemy
+Summary:        Modular and flexible ORM library for python
+Group:          Development/Libraries
+%{?python_provide:%python_provide python2-sqlalchemy}
+
+%description -n python2-sqlalchemy
+SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
+high-level interface to SQL databases.  Database and domain concepts are
+decoupled, allowing both sides maximum flexibility and power. SQLAlchemy
+provides a powerful mapping layer that can work as automatically or as manually
+as you choose, determining relationships based on foreign keys or letting you
+define the join conditions explicitly, to bridge the gap between database and
+domain.
+
+This package includes the python 2 version of the module.
+
 %if 0%{?with_python3}
 %package -n python3-sqlalchemy
 Summary:        Modular and flexible ORM library for python
 Group:          Development/Libraries
+%{?python_provide:%python_provide python%{python3_pkgversion}-sqlalchemy}
 
 %description -n python3-sqlalchemy
 SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
@@ -67,64 +83,56 @@ This package includes the python 3 version of the module.
 %prep
 %setup -q -n %{srcname}-%{version}
 
-%if 0%{?with_python3}
-rm -rf %{py3dir}
-cp -a . %{py3dir}
-%endif # with_python3
-
 %build
-CFLAGS="%{optflags}" %{__python2} setup.py build
+%py2_build
 
 %if 0%{?with_python3}
-pushd %{py3dir}
-CFLAGS="%{optflags}" %{__python3} setup.py build
-popd
+%py3_build
 %endif
 
 %install
-rm -rf %{buildroot}
-
-mkdir -p %{buildroot}%{python2_sitelib}
-%{__python2} setup.py install --skip-build --root %{buildroot}
+#mkdir -p %{buildroot}%{python2_sitelib}
+%py2_install
 
 %if 0%{?with_python3}
-pushd %{py3dir}
-mkdir -p %{buildroot}%{python3_sitelib}
-%{__python3} setup.py install --skip-build --root %{buildroot}
-popd
+#mkdir -p %{buildroot}%{python3_sitelib}
+%py3_install
 %endif
 
 # remove unnecessary scripts for building documentation
 rm -rf doc/build
-
-%clean
-rm -rf %{buildroot}
 
 %check
 pytest2="py.test-$(%{__python2} -c 'from __future__ import print_function; import sys; vi=sys.version_info; print("{0}.{1}".format(vi.major, vi.minor))')"
 PYTHONPATH=. "$pytest2" test
 
 %if 0%{?with_python3}
-pushd %{py3dir}
 pytest3="py.test-$(%{__python3} -c 'from __future__ import print_function; import sys; vi=sys.version_info; print("{0}.{1}".format(vi.major, vi.minor))')"
 PYTHONPATH=. "$pytest3" test
-popd
 %endif
 
 
-%files
-%defattr(-,root,root,-)
-%doc README.rst LICENSE PKG-INFO CHANGES doc examples
+%files doc
+%doc doc examples
+
+%files -n python2-sqlalchemy
+%license LICENSE
+%doc README.rst
 %{python2_sitearch}/*
 
 %if 0%{?with_python3}
 %files -n python3-sqlalchemy
-%defattr(-,root,root,-)
-%doc LICENSE PKG-INFO doc examples
+%license LICENSE
+%doc README.rst
 %{python3_sitearch}/*
 %endif # with_python3
 
 %changelog
+* Tue Nov 8 2016 Orion Poplwski <orion@cora.nwra.com> - 1.1.3-2
+- Ship python2-sqlalchemy
+- Move docs into sub-package
+- Modernize spec
+
 * Mon Oct 31 2016 Kevin Fenzi <kevin@scrye.com> - 1.1.3-1
 - Update to 1.1.3. Fixes bug #1389638
 
