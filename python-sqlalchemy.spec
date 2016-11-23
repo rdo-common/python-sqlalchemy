@@ -5,8 +5,8 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.1.3
-Release:        2%{?dist}
+Version:        1.1.4
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -128,6 +128,9 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Wed Nov 23 2016 Kevin Fenzi <kevin@scrye.com> - 1.1.4-1
+- Update to 1.1.4. Fixes bug #1395470
+
 * Tue Nov 8 2016 Orion Poplwski <orion@cora.nwra.com> - 1.1.3-2
 - Ship python2-sqlalchemy
 - Move docs into sub-package
