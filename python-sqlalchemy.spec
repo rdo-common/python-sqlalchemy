@@ -138,7 +138,7 @@ PYTHONPATH=. "$pytest3" test
 * Wed Nov 23 2016 Kevin Fenzi <kevin@scrye.com> - 1.1.4-1
 - Update to 1.1.4. Fixes bug #1395470
 
-* Tue Nov 8 2016 Orion Poplwski <orion@cora.nwra.com> - 1.1.3-2
+* Tue Nov 8 2016 Orion Poplawski <orion@cora.nwra.com> - 1.1.3-2
 - Ship python2-sqlalchemy
 - Move docs into sub-package
 - Modernize spec
