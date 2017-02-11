@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        1.1.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -128,6 +128,9 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Fri Feb 03 2017 Nils Philippsen <nils@redhat.com> - 1.1.5-1
 - version 1.1.5
 
