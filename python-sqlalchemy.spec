@@ -91,11 +91,9 @@ This package includes the python 3 version of the module.
 %endif
 
 %install
-#mkdir -p %{buildroot}%{python2_sitelib}
 %py2_install
 
 %if 0%{?with_python3}
-#mkdir -p %{buildroot}%{python3_sitelib}
 %py3_install
 %endif
 
@@ -130,6 +128,7 @@ PYTHONPATH=. "$pytest3" test
 %changelog
 * Tue Aug 01 2017 Nils Philippsen <nils@tiptoe.de> - 1.1.12
 - version 1.1.12
+- remove comments with macros
 
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.11-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
