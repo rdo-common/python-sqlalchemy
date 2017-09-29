@@ -1,4 +1,4 @@
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %global with_python3 1
 %endif
 
@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        1.1.13
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -126,6 +126,9 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Fri Sep 29 2017 Troy Dawson <tdawson@redhat.com> - 01.1.13-2
+- Cleanup spec file conditionals
+
 * Sat Aug 05 2017 Nils Philippsen <nils@tiptoe.de> - 1.1.13
 - version 1.1.13
 
