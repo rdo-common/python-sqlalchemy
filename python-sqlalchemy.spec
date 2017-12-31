@@ -128,14 +128,15 @@ PYTHONPATH=. "$pytest3" test
 %changelog
 * Sun Dec 31 2017 Nils Philippsen <nils@tiptoe.de> - 1.2.0-1
 - version 1.2.0
+- fix version-releases in changelog
 
-* Fri Sep 29 2017 Troy Dawson <tdawson@redhat.com> - 01.1.13-2
+* Fri Sep 29 2017 Troy Dawson <tdawson@redhat.com> - 1.1.13-2
 - Cleanup spec file conditionals
 
-* Sat Aug 05 2017 Nils Philippsen <nils@tiptoe.de> - 1.1.13
+* Sat Aug 05 2017 Nils Philippsen <nils@tiptoe.de> - 1.1.13-1
 - version 1.1.13
 
-* Tue Aug 01 2017 Nils Philippsen <nils@tiptoe.de> - 1.1.12
+* Tue Aug 01 2017 Nils Philippsen <nils@tiptoe.de> - 1.1.12-1
 - version 1.1.12
 - remove comments with macros
 
