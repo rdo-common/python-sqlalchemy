@@ -6,13 +6,15 @@
 
 Name:           python-sqlalchemy
 Version:        1.2.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+
+Patch0001:      0001-Revert-Add-tests-for-empty-association-set-compariso.patch
 
 BuildRequires:  python2-devel >= 2.6
 BuildRequires:  python-setuptools
@@ -82,6 +84,7 @@ This package includes the python 3 version of the module.
 
 %prep
 %setup -q -n %{srcname}-%{version}
+%patch1 -p1
 
 %build
 %py2_build
@@ -126,6 +129,9 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Tue Jan 30 2018 Alfredo Moralejo <amoralej@redhat.com> - 1.2.2-2
+- Disabled bogus unit tests with python version in CentOS.
+
 * Tue Jan 30 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.2-1
 - version 1.2.2
 
