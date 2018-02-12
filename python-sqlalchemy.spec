@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        1.2.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -15,9 +15,9 @@ URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
 
 BuildRequires:  python2-devel >= 2.6
-BuildRequires:  python-setuptools
-BuildRequires:  python-mock
-BuildRequires:  pytest
+BuildRequires:  python2-setuptools
+BuildRequires:  python2-mock
+BuildRequires:  python2-pytest
 
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
@@ -126,6 +126,10 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Mon Feb 12 2018 Iryna Shcherbina <ishcherb@redhat.com> - 1.2.2-3
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
