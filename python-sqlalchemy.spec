@@ -6,13 +6,15 @@
 
 Name:           python-sqlalchemy
 Version:        1.2.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+
+BuildRequires:  gcc
 
 BuildRequires:  python2-devel >= 2.6
 BuildRequires:  python2-setuptools
@@ -126,6 +128,9 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Tue Feb 20 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.3-2
+- require gcc for building
+
 * Tue Feb 20 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.3-1
 - version 1.2.3
 
