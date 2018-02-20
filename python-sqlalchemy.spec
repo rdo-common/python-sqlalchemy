@@ -5,8 +5,8 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.2.2
-Release:        3%{?dist}
+Version:        1.2.3
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -126,6 +126,9 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Tue Feb 20 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.3-1
+- version 1.2.3
+
 * Mon Feb 12 2018 Iryna Shcherbina <ishcherb@redhat.com> - 1.2.2-3
 - Update Python 2 dependency declarations to new packaging standards
   (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
