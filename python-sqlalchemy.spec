@@ -128,7 +128,7 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
-* Mon Mar 30 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.6-1
+* Sat Mar 31 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.6-1
 - version 1.2.6
 
 * Mon Mar 19 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.5-1
