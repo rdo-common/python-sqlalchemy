@@ -5,7 +5,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.2.7
+Version:        1.2.8
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
@@ -128,6 +128,9 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Tue Jun 05 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.8-1
+- version 1.2.8
+
 * Sun Apr 22 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.7-1
 - version 1.2.7
 
