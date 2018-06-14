@@ -14,6 +14,10 @@ License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
 
+# There are DeprecationWarnings that prevent the tests from running on Python 3.7
+# Those should be fixed upstream, we ignore them instead
+Patch0:         %{name}-ignore-DeprecationWarning.patch
+
 BuildRequires:  gcc
 
 BuildRequires:  python2-devel >= 2.6
@@ -83,7 +87,7 @@ This package includes the python 3 version of the module.
 %global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%autosetup -p1 -n %{srcname}-%{version}
 
 %build
 %py2_build

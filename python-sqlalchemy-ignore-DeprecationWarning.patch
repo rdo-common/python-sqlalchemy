@@ -1,0 +1,56 @@
+diff --git a/lib/sqlalchemy/util/langhelpers.py b/lib/sqlalchemy/util/langhelpers.py
+index 213f3a0..1518d2b 100644
+--- a/lib/sqlalchemy/util/langhelpers.py
++++ b/lib/sqlalchemy/util/langhelpers.py
+@@ -371,7 +371,9 @@ def format_argspec_plus(fn, grouped=True):
+     else:
+         # we accept an existing argspec...
+         spec = fn
+-    args = inspect.formatargspec(*spec)
++    with warnings.catch_warnings():
++        warnings.filterwarnings("ignore", category=DeprecationWarning)
++        args = inspect.formatargspec(*spec)
+     if spec[0]:
+         self_arg = spec[0][0]
+     elif spec[1]:
+@@ -380,8 +382,10 @@ def format_argspec_plus(fn, grouped=True):
+         self_arg = None
+ 
+     if compat.py3k:
+-        apply_pos = inspect.formatargspec(spec[0], spec[1],
+-                                          spec[2], None, spec[4])
++        with warnings.catch_warnings():
++            warnings.filterwarnings("ignore", category=DeprecationWarning)
++            apply_pos = inspect.formatargspec(spec[0], spec[1],
++                                              spec[2], None, spec[4])
+         num_defaults = 0
+         if spec[3]:
+             num_defaults += len(spec[3])
+@@ -400,9 +404,11 @@ def format_argspec_plus(fn, grouped=True):
+     else:
+         defaulted_vals = ()
+ 
+-    apply_kw = inspect.formatargspec(name_args, spec[1], spec[2],
+-                                     defaulted_vals,
+-                                     formatvalue=lambda x: '=' + x)
++    with warnings.catch_warnings():
++        warnings.filterwarnings("ignore", category=DeprecationWarning)
++        apply_kw = inspect.formatargspec(name_args, spec[1], spec[2],
++                                         defaulted_vals,
++                                         formatvalue=lambda x: '=' + x)
+     if grouped:
+         return dict(args=args, self_arg=self_arg,
+                     apply_pos=apply_pos, apply_kw=apply_kw)
+@@ -646,8 +652,10 @@ def monkeypatch_proxied_specials(into_cls, from_cls, skip=None, only=None,
+             continue
+         try:
+             spec = compat.inspect_getargspec(fn)
+-            fn_args = inspect.formatargspec(spec[0])
+-            d_args = inspect.formatargspec(spec[0][1:])
++            with warnings.catch_warnings():
++                warnings.filterwarnings("ignore", category=DeprecationWarning)
++                fn_args = inspect.formatargspec(spec[0])
++                d_args = inspect.formatargspec(spec[0][1:])
+         except TypeError:
+             fn_args = '(self, *args, **kw)'
+             d_args = '(*args, **kw)'
