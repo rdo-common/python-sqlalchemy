@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        1.2.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -128,6 +128,9 @@ PYTHONPATH=. "$pytest3" test
 %endif # with_python3
 
 %changelog
+* Thu Jun 14 2018 Miro Hrončok <mhroncok@redhat.com> - 1.2.8-2
+- Rebuilt for Python 3.7
+
 * Tue Jun 05 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.8-1
 - version 1.2.8
 
