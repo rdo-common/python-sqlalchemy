@@ -109,12 +109,10 @@ rm -rf doc/build
 %check
 # We temporarily skip test_round_trip_direct_type_affinity to unblock the Python 3.7 rebuild
 # https://bugzilla.redhat.com/show_bug.cgi?id=1591353
-pytest2="py.test-$(%{__python2} -c 'from __future__ import print_function; import sys; vi=sys.version_info; print("{0}.{1}".format(vi.major, vi.minor))')"
-PYTHONPATH=. "$pytest2" test -k "not test_round_trip_direct_type_affinity"
+PYTHONPATH=. %{__python2} -m pytest test -k "not test_round_trip_direct_type_affinity"
 
 %if 0%{?with_python3}
-pytest3="py.test-$(%{__python3} -c 'from __future__ import print_function; import sys; vi=sys.version_info; print("{0}.{1}".format(vi.major, vi.minor))')"
-PYTHONPATH=. "$pytest3" test -k "not test_round_trip_direct_type_affinity"
+PYTHONPATH=. %{__python3} -m pytest test -k "not test_round_trip_direct_type_affinity"
 %endif
 
 
