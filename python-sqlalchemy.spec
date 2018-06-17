@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        1.2.8
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -136,7 +136,7 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
-* Sun Jun 17 2018 Nils Philippsen <nils@tiptoe.de>
+* Sun Jun 17 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.8-3
 - rename patch, apply with backups
 - fix failing test for sqlite 3.24 instead of skipping it
 
