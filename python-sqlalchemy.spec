@@ -18,6 +18,10 @@ Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{sr
 # 3.7 Those should be fixed upstream, we ignore them instead
 Patch0:         python-sqlalchemy-1.2.8-ignore-DeprecationWarning.patch
 
+# Fix tests for sqlite 3.24
+# https://github.com/zzzeek/sqlalchemy/pull/452
+Patch1:         python-sqlalchemy-1.2.8-sqlite-3.24.patch
+
 BuildRequires:  gcc
 
 BuildRequires:  python2-devel >= 2.6
@@ -109,12 +113,10 @@ This package includes the python 3 version of the module.
 rm -rf doc/build
 
 %check
-# We temporarily skip test_round_trip_direct_type_affinity to unblock the Python 3.7 rebuild
-# https://bugzilla.redhat.com/show_bug.cgi?id=1591353
-PYTHONPATH=. %{__python2} -m pytest test -k "not test_round_trip_direct_type_affinity"
+PYTHONPATH=. %{__python2} -m pytest test
 
 %if 0%{?with_python3}
-PYTHONPATH=. %{__python3} -m pytest test -k "not test_round_trip_direct_type_affinity"
+PYTHONPATH=. %{__python3} -m pytest test
 %endif
 
 
@@ -136,6 +138,7 @@ PYTHONPATH=. %{__python3} -m pytest test -k "not test_round_trip_direct_type_aff
 %changelog
 * Sun Jun 17 2018 Nils Philippsen <nils@tiptoe.de>
 - rename patch, apply with backups
+- fix failing test for sqlite 3.24 instead of skipping it
 
 * Thu Jun 14 2018 Miro Hrončok <mhroncok@redhat.com> - 1.2.8-2
 - Rebuilt for Python 3.7

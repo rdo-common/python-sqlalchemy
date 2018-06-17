@@ -1,0 +1,28 @@
+From 3fd3ac6d554019f54efe1935f3a25cb5939fdad3 Mon Sep 17 00:00:00 2001
+From: Nils Philippsen <nils@tiptoe.de>
+Date: Mon, 18 Jun 2018 00:08:38 +0200
+Subject: [PATCH] fix TypeReflectionTest for sqlite 3.24
+
+SQLite 3.24 added support for PostgreSQL-style UPSERT. This added two
+new keywords 'DO' and 'NOTHING' which made
+test_round_trip_direct_type_affinity() fail with a syntax error.
+---
+ test/dialect/test_sqlite.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/dialect/test_sqlite.py b/test/dialect/test_sqlite.py
+index 4c462aed1..d2d563208 100644
+--- a/test/dialect/test_sqlite.py
++++ b/test/dialect/test_sqlite.py
+@@ -1637,7 +1637,7 @@ class TypeReflectionTest(fixtures.TestBase):
+             ("BLOBBER", sqltypes.NullType()),
+             ("DOUBLE PRECISION", sqltypes.REAL()),
+             ("FLOATY", sqltypes.REAL()),
+-            ("NOTHING WE KNOW", sqltypes.NUMERIC()),
++            ("SOMETHING UNKNOWN", sqltypes.NUMERIC()),
+         ]
+ 
+     def _fixture_as_string(self, fixture):
+-- 
+2.17.1
+
