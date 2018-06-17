@@ -94,6 +94,7 @@ This package includes the python 3 version of the module.
 %setup -n %{srcname}-%{version}
 
 %patch0 -p1 -b .ignore-DeprecationWarning
+%patch1 -p1 -b .sqlite-3.24
 
 %build
 %py2_build
