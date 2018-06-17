@@ -14,9 +14,9 @@ License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
 
-# There are DeprecationWarnings that prevent the tests from running on Python 3.7
-# Those should be fixed upstream, we ignore them instead
-Patch0:         %{name}-ignore-DeprecationWarning.patch
+# There are DeprecationWarnings that prevent the tests from running on Python
+# 3.7 Those should be fixed upstream, we ignore them instead
+Patch0:         python-sqlalchemy-1.2.8-ignore-DeprecationWarning.patch
 
 BuildRequires:  gcc
 
@@ -87,7 +87,9 @@ This package includes the python 3 version of the module.
 %global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 %prep
-%autosetup -p1 -n %{srcname}-%{version}
+%setup -n %{srcname}-%{version}
+
+%patch0 -p1 -b .ignore-DeprecationWarning
 
 %build
 %py2_build
@@ -132,6 +134,9 @@ PYTHONPATH=. %{__python3} -m pytest test -k "not test_round_trip_direct_type_aff
 %endif # with_python3
 
 %changelog
+* Sun Jun 17 2018 Nils Philippsen <nils@tiptoe.de>
+- rename patch, apply with backups
+
 * Thu Jun 14 2018 Miro Hrončok <mhroncok@redhat.com> - 1.2.8-2
 - Rebuilt for Python 3.7
 
