@@ -6,7 +6,7 @@
 
 Name:           python-sqlalchemy
 Version:        1.2.8
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
@@ -137,6 +137,9 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.8-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Sun Jun 17 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.8-3
 - rename patch, apply with backups
 - fix failing test for sqlite 3.24 instead of skipping it
