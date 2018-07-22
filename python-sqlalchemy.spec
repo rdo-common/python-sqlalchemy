@@ -5,22 +5,14 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.2.8
-Release:        4%{?dist}
+Version:        1.2.10
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
-
-# There are DeprecationWarnings that prevent the tests from running on Python
-# 3.7 Those should be fixed upstream, we ignore them instead
-Patch0:         python-sqlalchemy-1.2.8-ignore-DeprecationWarning.patch
-
-# Fix tests for sqlite 3.24
-# https://github.com/zzzeek/sqlalchemy/pull/452
-Patch1:         python-sqlalchemy-1.2.8-sqlite-3.24.patch
 
 BuildRequires:  gcc
 
@@ -93,9 +85,6 @@ This package includes the python 3 version of the module.
 %prep
 %setup -n %{srcname}-%{version}
 
-%patch0 -p1 -b .ignore-DeprecationWarning
-%patch1 -p1 -b .sqlite-3.24
-
 %build
 %py2_build
 
@@ -137,6 +126,9 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
+* Sun Jul 22 2018 Nils Philippsen <nils@tiptoe.de> - 1.2.10-1
+- version 1.2.10
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.8-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
