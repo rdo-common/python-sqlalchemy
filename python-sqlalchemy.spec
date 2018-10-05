@@ -79,8 +79,6 @@ domain.
 This package includes the python 3 version of the module.
 %endif # with_python3
 
-# Filter unnecessary dependencies
-%global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 %prep
 %setup -n %{srcname}-%{version}
