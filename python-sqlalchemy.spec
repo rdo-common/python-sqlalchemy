@@ -9,7 +9,6 @@ Version:        1.2.16
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
-Group:          Development/Libraries
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
@@ -47,7 +46,6 @@ Documentation for SQLAlchemy
 
 %package -n python2-sqlalchemy
 Summary:        Modular and flexible ORM library for python
-Group:          Development/Libraries
 %{?python_provide:%python_provide python2-sqlalchemy}
 
 %description -n python2-sqlalchemy
@@ -64,7 +62,6 @@ This package includes the python 2 version of the module.
 %if 0%{?with_python3}
 %package -n python3-sqlalchemy
 Summary:        Modular and flexible ORM library for python
-Group:          Development/Libraries
 %{?python_provide:%python_provide python%{python3_pkgversion}-sqlalchemy}
 
 %description -n python3-sqlalchemy
