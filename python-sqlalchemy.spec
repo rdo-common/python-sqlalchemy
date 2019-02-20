@@ -5,8 +5,8 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.2.17
-Release:        2%{?dist}
+Version:        1.2.18
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -121,6 +121,9 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
+* Wed Feb 20 2019 Nils Philippsen <nils@tiptoe.de> - 1.2.18-1
+- version 1.2.18
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.17-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
