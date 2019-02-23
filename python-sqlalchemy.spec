@@ -29,7 +29,7 @@ BuildRequires:  python3-pytest
 %endif
 
 %description
-SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
+SQLAlchemy is an Object Relational Mapper (ORM) that provides a flexible,
 high-level interface to SQL databases.  Database and domain concepts are
 decoupled, allowing both sides maximum flexibility and power. SQLAlchemy
 provides a powerful mapping layer that can work as automatically or as manually
@@ -51,7 +51,7 @@ Summary:        Modular and flexible ORM library for python
 %{?python_provide:%python_provide python2-sqlalchemy}
 
 %description -n python2-sqlalchemy
-SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
+SQLAlchemy is an Object Relational Mapper (ORM) that provides a flexible,
 high-level interface to SQL databases.  Database and domain concepts are
 decoupled, allowing both sides maximum flexibility and power. SQLAlchemy
 provides a powerful mapping layer that can work as automatically or as manually
@@ -67,7 +67,7 @@ Summary:        Modular and flexible ORM library for python
 %{?python_provide:%python_provide python%{python3_pkgversion}-sqlalchemy}
 
 %description -n python3-sqlalchemy
-SQLAlchemy is an Object Relational Mappper (ORM) that provides a flexible,
+SQLAlchemy is an Object Relational Mapper (ORM) that provides a flexible,
 high-level interface to SQL databases.  Database and domain concepts are
 decoupled, allowing both sides maximum flexibility and power. SQLAlchemy
 provides a powerful mapping layer that can work as automatically or as manually
