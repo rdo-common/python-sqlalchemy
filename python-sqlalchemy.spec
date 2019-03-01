@@ -5,13 +5,15 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.2.18
+Version:        1.3.0~b3
+# cope with pre-release versions containing tildes
+%global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
 Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
 URL:            http://www.sqlalchemy.org/
-Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{version}.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{srcversion}.tar.gz
 
 BuildRequires:  gcc
 
@@ -78,7 +80,7 @@ This package includes the python 3 version of the module.
 
 
 %prep
-%setup -n %{srcname}-%{version}
+%setup -n %{srcname}-%{srcversion}
 
 %build
 %py2_build
@@ -121,6 +123,9 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
+* Fri Mar 01 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.0~b3-1
+- version 1.3.0b3
+
 * Wed Feb 20 2019 Nils Philippsen <nils@tiptoe.de> - 1.2.18-1
 - version 1.2.18
 
