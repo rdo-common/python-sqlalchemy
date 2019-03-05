@@ -5,7 +5,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.3.0~b3
+Version:        1.3.0
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
 Release:        1%{?dist}
@@ -123,6 +123,9 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
+* Tue Mar 05 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.0-1
+- version 1.3.0
+
 * Fri Mar 01 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.0~b3-1
 - version 1.3.0b3
 
