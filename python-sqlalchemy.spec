@@ -123,7 +123,7 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
-* Thu Apr 19 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.3-1
+* Thu Apr 18 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.3-1
 - version 1.3.3
 
 * Wed Apr 10 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.2-1
