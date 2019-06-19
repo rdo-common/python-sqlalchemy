@@ -5,7 +5,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.3.4
+Version:        1.3.5
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
 Release:        1%{?dist}
@@ -21,11 +21,13 @@ BuildRequires:  python2-devel >= 2.6
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-mock
 BuildRequires:  python2-pytest
+BuildRequires:  python2-pytest-xdist
 
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-pytest
+BuildRequires:  python3-pytest-xdist
 %endif
 
 %description
@@ -123,6 +125,10 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
+* Tue Jun 18 2019 Randy Barlow <bowlofeggs@fedoraproject.org> - 1.3.5-1
+- Update to 1.3.5 (#1721271).
+- https://docs.sqlalchemy.org/en/13/changelog/changelog_13.html#change-1.3.5
+
 * Mon Jun 03 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.4-1
 - version 1.3.4
 
