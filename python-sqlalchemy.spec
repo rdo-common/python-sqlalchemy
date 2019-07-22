@@ -21,7 +21,6 @@ BuildRequires:  python2-devel >= 2.6
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-mock
 BuildRequires:  python2-pytest
-BuildRequires:  python2-pytest-xdist
 
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
@@ -84,6 +83,10 @@ This package includes the python 3 version of the module.
 %prep
 %setup -n %{srcname}-%{srcversion}
 
+# Remove flag for pytest-xdist. (python2-pytest-xdist is a removed dependency.)
+# (--max-worker-restart=5 would end the test run after 5 crashing tests.)
+sed -i -e's/\(addopts = .*\) --max-worker-restart=5/\1/' setup.cfg
+
 %build
 %py2_build
 
@@ -125,6 +128,9 @@ PYTHONPATH=. %{__python3} -m pytest test
 %endif # with_python3
 
 %changelog
+* Mon Jul 22 2019 Petr Viktorin <pviktori@redhat.com>
+- Remove dependency on python2-xdist
+
 * Tue Jun 18 2019 Randy Barlow <bowlofeggs@fedoraproject.org> - 1.3.5-1
 - Update to 1.3.5 (#1721271).
 - https://docs.sqlalchemy.org/en/13/changelog/changelog_13.html#change-1.3.5
