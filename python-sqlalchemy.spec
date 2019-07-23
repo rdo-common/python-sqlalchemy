@@ -108,7 +108,7 @@ rm -rf doc/build
 PYTHONPATH=. %{__python2} -m pytest test
 
 %if 0%{?with_python3}
-PYTHONPATH=. %{__python3} -m pytest test
+PYTHONPATH=. %{__python3} -m pytest test --numprocesses=auto
 %endif
 
 
@@ -130,6 +130,7 @@ PYTHONPATH=. %{__python3} -m pytest test
 %changelog
 * Mon Jul 22 2019 Petr Viktorin <pviktori@redhat.com>
 - Remove dependency on python2-xdist
+- Enable multi-process testing using python3-xdist
 
 * Tue Jun 18 2019 Randy Barlow <bowlofeggs@fedoraproject.org> - 1.3.5-1
 - Update to 1.3.5 (#1721271).
