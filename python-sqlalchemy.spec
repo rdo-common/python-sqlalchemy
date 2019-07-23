@@ -8,7 +8,7 @@ Name:           python-sqlalchemy
 Version:        1.3.5
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -128,7 +128,7 @@ PYTHONPATH=. %{__python3} -m pytest test --numprocesses=auto
 %endif # with_python3
 
 %changelog
-* Mon Jul 22 2019 Petr Viktorin <pviktori@redhat.com>
+* Mon Jul 22 2019 Petr Viktorin <pviktori@redhat.com> - 1.3.5-2
 - Remove dependency on python2-xdist
 - Enable multi-process testing using python3-xdist
 
