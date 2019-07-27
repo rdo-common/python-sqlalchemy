@@ -5,10 +5,10 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.3.5
+Version:        1.3.6
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        3%{?dist}
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -128,6 +128,9 @@ PYTHONPATH=. %{__python3} -m pytest test --numprocesses=auto
 %endif # with_python3
 
 %changelog
+* Sat Jul 27 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.6-1
+- version 1.3.6
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
