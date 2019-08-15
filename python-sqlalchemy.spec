@@ -4,6 +4,9 @@
 
 %global srcname SQLAlchemy
 
+# when bootstrapping Python, pytest-xdist is not yet available
+%bcond_with xdist
+
 Name:           python-sqlalchemy
 Version:        1.3.6
 # cope with pre-release versions containing tildes
@@ -26,7 +29,9 @@ BuildRequires:  python2-pytest
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-pytest
+%if %{with xdist}
 BuildRequires:  python3-pytest-xdist
+%endif
 %endif
 
 %description
@@ -108,7 +113,10 @@ rm -rf doc/build
 PYTHONPATH=. %{__python2} -m pytest test
 
 %if 0%{?with_python3}
-PYTHONPATH=. %{__python3} -m pytest test --numprocesses=auto
+PYTHONPATH=. %{__python3} -m pytest test \
+%if %{with xdist}
+--numprocesses=auto
+%endif
 %endif
 
 
