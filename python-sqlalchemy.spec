@@ -8,7 +8,7 @@ Name:           python-sqlalchemy
 Version:        1.3.6
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -128,6 +128,9 @@ PYTHONPATH=. %{__python3} -m pytest test --numprocesses=auto
 %endif # with_python3
 
 %changelog
+* Thu Aug 15 2019 Miro Hrončok <mhroncok@redhat.com> - 1.3.6-2
+- Rebuilt for Python 3.8
+
 * Sat Jul 27 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.6-1
 - version 1.3.6
 
