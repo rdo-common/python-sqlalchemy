@@ -5,7 +5,7 @@
 %global srcname SQLAlchemy
 
 # when bootstrapping Python, pytest-xdist is not yet available
-%bcond_with xdist
+%bcond_without xdist
 
 Name:           python-sqlalchemy
 Version:        1.3.6
