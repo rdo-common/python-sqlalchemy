@@ -82,7 +82,8 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 This package includes the python 3 version of the module.
-%endif # with_python3
+%endif
+# with_python3
 
 
 %prep
@@ -133,7 +134,8 @@ PYTHONPATH=. %{__python3} -m pytest test \
 %license LICENSE
 %doc README.rst
 %{python3_sitearch}/*
-%endif # with_python3
+%endif
+# with_python3
 
 %changelog
 * Sun Aug 25 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.7-1
