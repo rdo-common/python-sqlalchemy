@@ -8,10 +8,10 @@
 %bcond_without xdist
 
 Name:           python-sqlalchemy
-Version:        1.3.6
+Version:        1.3.7
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        2%{?dist}
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -136,6 +136,9 @@ PYTHONPATH=. %{__python3} -m pytest test \
 %endif # with_python3
 
 %changelog
+* Sun Aug 25 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.7-1
+- version 1.3.7
+
 * Thu Aug 15 2019 Miro Hrončok <mhroncok@redhat.com> - 1.3.6-2
 - Rebuilt for Python 3.8
 
