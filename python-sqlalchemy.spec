@@ -28,6 +28,7 @@ BuildRequires:  python2-pytest
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+BuildRequires:  python3-mock
 BuildRequires:  python3-pytest
 %if %{with xdist}
 BuildRequires:  python3-pytest-xdist
@@ -140,6 +141,7 @@ PYTHONPATH=. %{__python3} -m pytest test \
 %changelog
 * Sun Aug 25 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.7-1
 - version 1.3.7
+- require python3-mock for building
 
 * Thu Aug 15 2019 Miro Hrončok <mhroncok@redhat.com> - 1.3.6-2
 - Rebuilt for Python 3.8
