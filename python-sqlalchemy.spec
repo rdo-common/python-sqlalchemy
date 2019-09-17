@@ -8,7 +8,7 @@
 %bcond_without xdist
 
 Name:           python-sqlalchemy
-Version:        1.3.7
+Version:        1.3.8
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
 Release:        1%{?dist}
@@ -139,6 +139,10 @@ PYTHONPATH=. %{__python3} -m pytest test \
 # with_python3
 
 %changelog
+* Tue Sep 17 2019 Randy Barlow <bowlofeggs@fedoraproject.org> - 1.3.8-1
+- Update to 1.3.8 (#1747080).
+- https://docs.sqlalchemy.org/en/13/changelog/changelog_13.html#change-1.3.8
+
 * Sun Aug 25 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.7-1
 - version 1.3.7
 - require python3-mock for building
