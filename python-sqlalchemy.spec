@@ -18,6 +18,10 @@ License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{srcversion}.tar.gz
 
+# https://github.com/sqlalchemy/sqlalchemy/issues/4920
+# https://github.com/sqlalchemy/sqlalchemy/pull/4921
+Patch0:         python-sqlalchemy-1.3.10-sqlite-3.30.patch
+
 BuildRequires:  gcc
 
 BuildRequires:  python2-devel >= 2.6
@@ -90,6 +94,8 @@ This package includes the python 3 version of the module.
 %prep
 %setup -n %{srcname}-%{srcversion}
 
+%patch0 -p1 -b .sqlite-3.30
+
 # Remove flag for pytest-xdist. (python2-pytest-xdist is a removed dependency.)
 # (--max-worker-restart=5 would end the test run after 5 crashing tests.)
 sed -i -e's/\(addopts = .*\) --max-worker-restart=5/\1/' setup.cfg
@@ -139,6 +145,9 @@ PYTHONPATH=. %{__python3} -m pytest test \
 # with_python3
 
 %changelog
+* Fri Oct 18 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.10-1
+- fix/skip tests that are broken on SQLite 3.30
+
 * Wed Oct 16 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.10-1
 - version 1.3.10
 
