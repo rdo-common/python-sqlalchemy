@@ -1,17 +1,27 @@
-%if 0%{?fedora} || 0%{?rhel} > 7
-%global with_python3 1
+# Don't build Python 3 package on all EL <= 7
+%if !0%{?rhel} || 0%{?rhel} > 7
+%bcond_without python3
+%else
+%bcond_with python3
 %endif
 
-%global srcname SQLAlchemy
+# Build Python 2 package on all Fedora < 32, EL < 9
+%if !0%{?fedora}%{?rhel} || 0%{?fedora} >= 32 || 0%{?rhel} >= 9
+%bcond_with python2
+%else
+%bcond_without python2
+%endif
 
 # when bootstrapping Python, pytest-xdist is not yet available
 %bcond_without xdist
+
+%global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
 Version:        1.3.10
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -23,13 +33,14 @@ Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{sr
 Patch0:         python-sqlalchemy-1.3.10-sqlite-3.30.patch
 
 BuildRequires:  gcc
-
+%if %{with python2}
 BuildRequires:  python2-devel >= 2.6
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-mock
 BuildRequires:  python2-pytest
+%endif
 
-%if 0%{?with_python3}
+%if %{with python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-mock
@@ -57,6 +68,7 @@ BuildArch:      noarch
 %description doc
 Documentation for SQLAlchemy
 
+%if %{with python2}
 %package -n python2-sqlalchemy
 Summary:        Modular and flexible ORM library for python
 %{?python_provide:%python_provide python2-sqlalchemy}
@@ -71,11 +83,16 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 This package includes the python 2 version of the module.
+%endif
+# with python2
 
-%if 0%{?with_python3}
+%if %{with python3}
 %package -n python3-sqlalchemy
 Summary:        Modular and flexible ORM library for python
 %{?python_provide:%python_provide python%{python3_pkgversion}-sqlalchemy}
+%if ! %{with python2}
+Obsoletes:      python2-sqlalchemy < 1.3.10-2
+%endif
 
 %description -n python3-sqlalchemy
 SQLAlchemy is an Object Relational Mapper (ORM) that provides a flexible,
@@ -88,7 +105,7 @@ domain.
 
 This package includes the python 3 version of the module.
 %endif
-# with_python3
+# with python3
 
 
 %prep
@@ -101,16 +118,20 @@ This package includes the python 3 version of the module.
 sed -i -e's/\(addopts = .*\) --max-worker-restart=5/\1/' setup.cfg
 
 %build
+%if %{with python2}
 %py2_build
+%endif
 
-%if 0%{?with_python3}
+%if %{with python3}
 %py3_build
 %endif
 
 %install
+%if %{with python2}
 %py2_install
+%endif
 
-%if 0%{?with_python3}
+%if %{with python3}
 %py3_install
 %endif
 
@@ -118,9 +139,11 @@ sed -i -e's/\(addopts = .*\) --max-worker-restart=5/\1/' setup.cfg
 rm -rf doc/build
 
 %check
+%if %{with python2}
 PYTHONPATH=. %{__python2} -m pytest test
+%endif
 
-%if 0%{?with_python3}
+%if %{with python3}
 PYTHONPATH=. %{__python3} -m pytest test \
 %if %{with xdist}
 --numprocesses=auto
@@ -131,20 +154,26 @@ PYTHONPATH=. %{__python3} -m pytest test \
 %files doc
 %doc doc examples
 
+%if %{with python2}
 %files -n python2-sqlalchemy
 %license LICENSE
 %doc README.rst
 %{python2_sitearch}/*
+%endif
+# with python2
 
-%if 0%{?with_python3}
+%if %{with python3}
 %files -n python3-sqlalchemy
 %license LICENSE
 %doc README.rst
 %{python3_sitearch}/*
 %endif
-# with_python3
+# with python3
 
 %changelog
+* Wed Nov 13 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.10-2
+- drop python2-sqlalchemy from F32 on
+
 * Fri Oct 18 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.10-1
 - fix/skip tests that are broken on SQLite 3.30
 
