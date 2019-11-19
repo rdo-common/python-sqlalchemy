@@ -18,19 +18,15 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.3.10
+Version:        1.3.11
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        2%{?dist}
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
 URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{srcversion}.tar.gz
-
-# https://github.com/sqlalchemy/sqlalchemy/issues/4920
-# https://github.com/sqlalchemy/sqlalchemy/pull/4921
-Patch0:         python-sqlalchemy-1.3.10-sqlite-3.30.patch
 
 BuildRequires:  gcc
 %if %{with python2}
@@ -111,8 +107,6 @@ This package includes the python 3 version of the module.
 %prep
 %setup -n %{srcname}-%{srcversion}
 
-%patch0 -p1 -b .sqlite-3.30
-
 # Remove flag for pytest-xdist. (python2-pytest-xdist is a removed dependency.)
 # (--max-worker-restart=5 would end the test run after 5 crashing tests.)
 sed -i -e's/\(addopts = .*\) --max-worker-restart=5/\1/' setup.cfg
@@ -171,6 +165,10 @@ PYTHONPATH=. %{__python3} -m pytest test \
 # with python3
 
 %changelog
+* Tue Nov 19 2019 Randy Barlow <bowlofeggs@fedoraproject.org> - 1.3.11-1
+- Update to 1.3.11 (#1771196).
+- https://docs.sqlalchemy.org/en/13/changelog/changelog_13.html#change-1.3.11
+
 * Wed Nov 13 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.10-2
 - drop python2-sqlalchemy from F32 on
 
