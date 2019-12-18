@@ -18,7 +18,7 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.3.11
+Version:        1.3.12
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
 Release:        1%{?dist}
@@ -165,6 +165,9 @@ PYTHONPATH=. %{__python3} -m pytest test \
 # with python3
 
 %changelog
+* Wed Dec 18 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.12-1
+- version 1.3.12
+
 * Tue Nov 19 2019 Randy Barlow <bowlofeggs@fedoraproject.org> - 1.3.11-1
 - Update to 1.3.11 (#1771196).
 - https://docs.sqlalchemy.org/en/13/changelog/changelog_13.html#change-1.3.11
