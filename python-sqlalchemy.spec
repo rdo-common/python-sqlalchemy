@@ -165,7 +165,7 @@ PYTHONPATH=. %{__python3} -m pytest test \
 # with python3
 
 %changelog
-* Sun Jan 26 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.13-1
+* Sun Jan 26 2020 Nils Philippsen <nils@tiptoe.de> - 1.3.13-1
 - version 1.3.13
 
 * Wed Dec 18 2019 Nils Philippsen <nils@tiptoe.de> - 1.3.12-1
