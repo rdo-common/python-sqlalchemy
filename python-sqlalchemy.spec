@@ -105,7 +105,7 @@ This package includes the python 3 version of the module.
 
 
 %prep
-%setup -n %{srcname}-%{srcversion}
+%setup -q -n %{srcname}-%{srcversion}
 
 # Remove flag for pytest-xdist. (python2-pytest-xdist is a removed dependency.)
 # (--max-worker-restart=5 would end the test run after 5 crashing tests.)
@@ -167,6 +167,7 @@ PYTHONPATH=. %{__python3} -m pytest test \
 %changelog
 * Thu Mar 26 2020 Nils Philippsen <nils@tiptoe.de> - 1.3.15-1
 - version 1.3.15
+- quieten %%setup
 
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.13-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
