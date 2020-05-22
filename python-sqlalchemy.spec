@@ -1,3 +1,4 @@
+%global _without_xdist 1
 # Don't build Python 3 package on all EL <= 7
 %if !0%{?rhel} || 0%{?rhel} > 7
 %bcond_without python3
@@ -21,7 +22,7 @@ Name:           python-sqlalchemy
 Version:        1.3.17
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -165,6 +166,9 @@ PYTHONPATH=. %{__python3} -m pytest test \
 # with python3
 
 %changelog
+* Fri May 22 2020 Miro Hrončok <mhroncok@redhat.com> - 1.3.17-2
+- Bootstrap for Python 3.9
+
 * Sat May 16 2020 Nils Philippsen <nils@tiptoe.de> - 1.3.17-1
 - version 1.3.17
 
