@@ -21,7 +21,7 @@ Name:           python-sqlalchemy
 Version:        1.3.22
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -165,6 +165,9 @@ PYTHONPATH=. %{__python3} -m pytest test \
 # with python3
 
 %changelog
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.22-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Mon Dec 21 2020 Nils Philippsen <nils@tiptoe.de> - 1.3.22-1
 - version 1.3.22
 
