@@ -5,8 +5,8 @@
 %bcond_with python3
 %endif
 
-# Build Python 2 package on all EL < 9
-%if !0%{?rhel} || 0%{?rhel} >= 9
+# Build Python 2 package on all Fedora < 32, EL < 9
+%if !0%{?fedora}%{?rhel} || 0%{?fedora} >= 32 || 0%{?rhel} >= 9
 %bcond_with python2
 %else
 %bcond_without python2
@@ -18,10 +18,10 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.4.3
+Version:        1.3.22
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -37,7 +37,7 @@ BuildRequires:  python2-pytest
 %endif
 
 %if %{with python3}
-BuildRequires:  python3-devel >= 3.6
+BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-mock
 BuildRequires:  python3-pytest
@@ -165,9 +165,6 @@ PYTHONPATH=. %{__python3} -m pytest test \
 # with python3
 
 %changelog
-* Fri Mar 26 2021 Nils Philippsen <nils@tiptoe.de> - 1.4.3-1
-- version 1.4.3
-
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.22-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
