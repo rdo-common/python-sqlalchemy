@@ -18,10 +18,10 @@
 %global srcname SQLAlchemy
 
 Name:           python-sqlalchemy
-Version:        1.3.22
+Version:        1.3.23
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        3%{?dist}
+Release:        1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -168,6 +168,9 @@ PYTHONPATH=. %{__python3} -m pytest -k "not test_pyodbc_extra_connect_azure" tes
 # with python3
 
 %changelog
+* Mon May 03 2021 Yatin Karel <ykarel@redhat.com> - 1.3.23-1
+- Update to version 1.3.23
+
 * Fri Apr 30 2021 Tomas Hrnciar <thrnciar@redhat.com> - 1.3.22-3
 - Disabled failing test test_pyodbc_extra_connect_azure
 
