@@ -9,7 +9,7 @@
 %if !0%{?fedora}%{?rhel} || 0%{?fedora} >= 32 || 0%{?rhel} >= 9
 %bcond_with python2
 %else
-%bcond_without python2
+%bcond_with python2
 %endif
 
 # when bootstrapping Python, pytest-xdist is not yet available
