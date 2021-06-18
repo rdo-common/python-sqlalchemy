@@ -1,27 +1,25 @@
-# Don't build Python 3 package on all EL <= 7
-%if !0%{?rhel} || 0%{?rhel} > 7
-%bcond_without python3
-%else
-%bcond_with python3
-%endif
-
-# Build Python 2 package on all Fedora < 32, EL < 9
-%if !0%{?fedora}%{?rhel} || 0%{?fedora} >= 32 || 0%{?rhel} >= 9
-%bcond_with python2
-%else
-%bcond_with python2
-%endif
-
 # when bootstrapping Python, pytest-xdist is not yet available
 %bcond_without xdist
 
 %global srcname SQLAlchemy
 
+%global python_pkg_extras \
+    asyncio \
+    mssql_pymssql \
+    mssql_pyodbc \
+    mysql \
+    postgresql \
+    postgresql_pg8000 \
+    postgresql_asyncpg \
+    pymysql \
+    aiomysql \
+    aiosqlite
+
 Name:           python-sqlalchemy
-Version:        1.3.23
+Version:        1.4.18
 # cope with pre-release versions containing tildes
 %global srcversion %{lua: srcversion, num = rpm.expand("%{version}"):gsub("~", ""); print(srcversion);}
-Release:        1%{?dist}
+Release:        1.1%{?dist}
 Summary:        Modular and flexible ORM library for python
 
 License:        MIT
@@ -29,21 +27,13 @@ URL:            http://www.sqlalchemy.org/
 Source0:        https://files.pythonhosted.org/packages/source/S/%{srcname}/%{srcname}-%{srcversion}.tar.gz
 
 BuildRequires:  gcc
-%if %{with python2}
-BuildRequires:  python2-devel >= 2.6
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-mock
-BuildRequires:  python2-pytest
-%endif
-
-%if %{with python3}
-BuildRequires:  python3-devel
+BuildRequires:  python3-devel >= 3.6
+BuildRequires:  python3-greenlet
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-mock
 BuildRequires:  python3-pytest
 %if %{with xdist}
 BuildRequires:  python3-pytest-xdist
-%endif
 %endif
 
 %description
@@ -64,31 +54,10 @@ BuildArch:      noarch
 %description doc
 Documentation for SQLAlchemy
 
-%if %{with python2}
-%package -n python2-sqlalchemy
-Summary:        Modular and flexible ORM library for python
-%{?python_provide:%python_provide python2-sqlalchemy}
-
-%description -n python2-sqlalchemy
-SQLAlchemy is an Object Relational Mapper (ORM) that provides a flexible,
-high-level interface to SQL databases.  Database and domain concepts are
-decoupled, allowing both sides maximum flexibility and power. SQLAlchemy
-provides a powerful mapping layer that can work as automatically or as manually
-as you choose, determining relationships based on foreign keys or letting you
-define the join conditions explicitly, to bridge the gap between database and
-domain.
-
-This package includes the python 2 version of the module.
-%endif
-# with python2
-
-%if %{with python3}
 %package -n python3-sqlalchemy
 Summary:        Modular and flexible ORM library for python
 %{?python_provide:%python_provide python%{python3_pkgversion}-sqlalchemy}
-%if ! %{with python2}
 Obsoletes:      python2-sqlalchemy < 1.3.10-2
-%endif
 
 %description -n python3-sqlalchemy
 SQLAlchemy is an Object Relational Mapper (ORM) that provides a flexible,
@@ -100,8 +69,9 @@ define the join conditions explicitly, to bridge the gap between database and
 domain.
 
 This package includes the python 3 version of the module.
-%endif
-# with python3
+
+# Subpackages to ensure dependencies enabling extra functionality
+%{?python_extras_subpkg:%python_extras_subpkg -n python3-sqlalchemy -i %{python3_sitearch}/*.egg-info %python_pkg_extras}
 
 
 %prep
@@ -112,64 +82,46 @@ This package includes the python 3 version of the module.
 sed -i -e's/\(addopts = .*\) --max-worker-restart=5/\1/' setup.cfg
 
 %build
-%if %{with python2}
-%py2_build
-%endif
-
-%if %{with python3}
 %py3_build
-%endif
 
 %install
-%if %{with python2}
-%py2_install
-%endif
-
-%if %{with python3}
 %py3_install
-%endif
 
 # remove unnecessary scripts for building documentation
 rm -rf doc/build
 
 %check
-%if %{with python2}
-PYTHONPATH=. %{__python2} -m pytest test
-%endif
-
-%if %{with python3}
-# Package is FTBFS because of failing test_pyodbc_extra_connect_azure.
-# Since there is old version of sqlalchemy in rawhide, there is no point
-# to fix it and we are just skipping it.
-PYTHONPATH=. %{__python3} -m pytest -k "not test_pyodbc_extra_connect_azure" test \
+PYTHONPATH=. %{__python3} -m pytest test \
 %if %{with xdist}
 --numprocesses=auto
-%endif
 %endif
 
 
 %files doc
 %doc doc examples
 
-%if %{with python2}
-%files -n python2-sqlalchemy
-%license LICENSE
-%doc README.rst
-%{python2_sitearch}/*
-%endif
-# with python2
-
-%if %{with python3}
 %files -n python3-sqlalchemy
 %license LICENSE
 %doc README.rst
 %{python3_sitearch}/*
-%endif
-# with python3
 
 %changelog
-* Mon May 03 2021 Yatin Karel <ykarel@redhat.com> - 1.3.23-1
-- Update to version 1.3.23
+* Fri Jun 18 2021 Yatin Karel <ykarel@redhat.com> - 1.4.18-1.1
+- Drop unnecessary lower bond on greenlet BR
+
+* Sun Jun 13 2021 Nils Philippsen <nils@tiptoe.de> - 1.4.18-1
+- version 1.4.18
+
+* Thu Jun 03 2021 Python Maint <python-maint@redhat.com> - 1.4.15-2
+- Rebuilt for Python 3.10
+
+* Fri May 14 2021 Nils Philippsen <nils@tiptoe.de> - 1.4.15-1
+- version 1.4.15
+
+* Mon May 10 2021 Nils Philippsen <nils@tiptoe.de> - 1.4.14-1
+- version 1.4.14
+- drop Python 2.x support
+- define extras subpackages
 
 * Fri Apr 30 2021 Tomas Hrnciar <thrnciar@redhat.com> - 1.3.22-3
 - Disabled failing test test_pyodbc_extra_connect_azure
